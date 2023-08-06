@@ -71,6 +71,7 @@
             <td>{{ result.option5_count }}</td>
         </tr>
     </table>
+    <br>
     <!-- <input type="text" [(ngModel)]="username" placeholder="Username" />
     <input type="password" [(ngModel)]="newPassword" placeholder="New Password" />
     <button (click)="changePassword(username, newPassword)">Change Password</button> -->
@@ -85,4 +86,18 @@
             <td>{{ user.password }}</td>
         </tr>
     </table>
+   
+    <p >{{ message }}</p>
+    <br>
+    <h1>Изменение пароля пользователя</h1>
+    <form (ngSubmit)="changePassword()">
+      <label for="username">Имя пользователя:</label>
+      <input type="text" id="username" [(ngModel)]="EditUsername" name="username" />
+      <br />
+      <label for="newPassword">Новый пароль:</label>
+      <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" />
+      <br />
+      <button type="submit">Изменить пароль</button>
+    </form>
+    
 </div>

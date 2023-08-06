@@ -42,8 +42,9 @@ export class AppComponent {
     newPassword: string = "";
     users: User[] = [];
     testCompleted: boolean = false;
-    isAdmin:boolean=false;
+    isAdmin: boolean = false;
 
+    EditUsername: string="";
     token: string | null = null;
     questions: Question[] = [];
     answers: number[] = [];
@@ -72,7 +73,7 @@ export class AppComponent {
                         this.token = res.token;
                         const decodedToken = jwt_decode<{ user_id: number; isAdmin: boolean }>(this.token);
                         if (decodedToken.isAdmin) {//если зашёл админ
-                            this.isAdmin=true;
+                            this.isAdmin = true;
                             this.http.get<Result[]>('http://localhost:3000/results', {
                                 headers: new HttpHeaders({
                                     Authorization: `Bearer ${this.token}`,
@@ -97,13 +98,22 @@ export class AppComponent {
                                 .subscribe((users) => {
                                     this.usersNotCompleted = users;
                                 });
-                            this.http.get<User[]>('http://localhost:3000/users')
-                                .subscribe((users) => (this.users = users));
-                            
+                            this.http
+                                .get<User[]>('http://localhost:3000/users', {
+                                    headers: new HttpHeaders({
+                                        Authorization: `Bearer ${this.token}`,
+                                    }),
+                                })
+                                .subscribe((data) => {
+                                    this.users = data;
+                                });
+
+
+
                         }
 
                         else {
-                                
+
                             this.http
                                 .get<Question[]>('http://localhost:3000/test', {
                                     headers: new HttpHeaders({
@@ -144,36 +154,47 @@ export class AppComponent {
         this.http
             .post(
                 'http://localhost:3000/test',
-                { answers: this.answers },                {
-                    headers: new HttpHeaders({
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${this.token}`,
-                    }),
-                }
+                { answers: this.answers }, {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${this.token}`,
+                }),
+            }
             )
             .subscribe((data) => {
                 console.log(data);
             }); location.reload();
     }
 
-    changePassword(username: string, newPassword: string) {
+    changePassword() {
+        // Получаем токен из localStorage
+        const token = localStorage.getItem('token');
+    
+        // Отправляем запрос на сервер для изменения пароля пользователя
         this.http
-            .post('/change-password', { username, newPassword })
-            .subscribe((response) => {
-                console.log(response);
-            });
-    }
+          .post<{ message: string }>(
+            'http://localhost:3000/change-password',
+            { username: this.EditUsername, newPassword: this.newPassword },
+            {
+              headers: new HttpHeaders({
+                Authorization: `Bearer ${token}`,
+              }),
+            }
+          )
+          .subscribe(
+            (res) => {
+              this.message = res.message;
+            },
+            (err) => {
+              this.message = err.error;
+            }
+          );
+          
+      }
     isFormValid() {
         return this.answers.every((answer) => answer !== undefined);
     }
-    showUsers(token: string) {
-        this.http
-            .get<User[]>('/users', {
-                headers: { Authorization: `Bearer ${token}` },
-            })
-            .subscribe((users) => (this.users = users));
-    }
-
+   
     checkTestCompleted(userId: string) {
         this.http
             .get<CheckTestCompletedResponse>(`/check-test-completed/${userId}`)
@@ -181,7 +202,7 @@ export class AppComponent {
     }
 
 
-   
-    
-     
+
+
+
 }

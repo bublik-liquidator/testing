@@ -39,7 +39,6 @@ export class AppComponent {
     password = '';
     message = "";
     errorMessage = '';
-    usersNotTakenTest!: string[];
     newPassword: string = "";
     users: User[] = [];
     testCompleted: boolean = false;
@@ -48,7 +47,6 @@ export class AppComponent {
     token: string | null = null;
     questions: Question[] = [];
     answers: number[] = [];
-    // results: Result[] = [];
     results: Result[] = [];
     userCount: number = 0;
     usersNotCompleted: string[] = [];
@@ -74,7 +72,7 @@ export class AppComponent {
                         this.token = res.token;
                         const decodedToken = jwt_decode<{ user_id: number; isAdmin: boolean }>(this.token);
                         if (decodedToken.isAdmin) {//если зашёл админ
-                            this.isAdmin=true
+                            this.isAdmin=true;
                             this.http.get<Result[]>('http://localhost:3000/results', {
                                 headers: new HttpHeaders({
                                     Authorization: `Bearer ${this.token}`,
@@ -101,15 +99,7 @@ export class AppComponent {
                                 });
                             this.http.get<User[]>('http://localhost:3000/users')
                                 .subscribe((users) => (this.users = users));
-                            this.http
-                                .get<string[]>('http://localhost:3000/usersNotTakenTest', {
-                                    headers: new HttpHeaders({
-                                        Authorization: `Bearer ${this.token}`,
-                                    }),
-                                })
-                                .subscribe((data) => {
-                                    this.usersNotTakenTest = data;
-                                });
+                            
                         }
 
                         else {

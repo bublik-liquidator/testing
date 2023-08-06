@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.questionsr form {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.message {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  color: #4CAF50;
+  text-align: center;
+  margin: 20px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+form h2 {
+  text-align: left;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 80%;
+  max-width: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  width: 50%;
+  max-width: 150px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ /* ... other styles ... */
+
+ button[disabled] {
+  cursor: not-allowed;
+}
+
+.not-allowed-icon {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/1d/No_Symbol.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+
+.table-container {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+@media (max-width: 600px) {
+
+  table,
+  th,
+  td {
+    font-size: 14px;
+    padding: 4px;
+    text-align: center
+  }
+}

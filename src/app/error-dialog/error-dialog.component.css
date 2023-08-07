@@ -1,0 +1,21 @@
+.mat-dialog-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.mat-dialog-container {
+    max-width: 80vw;
+    padding: 20px;
+  }
+  

@@ -66,11 +66,12 @@ button[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
 }
- /* ... other styles ... */
+
+/* ... other styles ... */
 /* styles.css */
 
 
- button[disabled] {
+button[disabled] {
   cursor: not-allowed;
 }
 
@@ -80,6 +81,7 @@ button[type="submit"] {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 button[type="submit"]:hover {
   background-color: #45a049;
 }
@@ -124,5 +126,16 @@ th {
     font-size: 14px;
     padding: 4px;
     text-align: center
+  }
+}
+
+.container {
+  max-width: 50%;
+  margin: auto;
+}
+
+@media (max-width: 500px) {
+  .container {
+    width: 100%;
   }
 }

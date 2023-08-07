@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import jwt_decode from 'jwt-decode';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 interface Question {
     id: number;
     question: string;
@@ -35,16 +36,17 @@ interface CheckTestCompletedResponse {
 
 })
 export class AppComponent {
+
+    adres: string = "http://localhost:3000";
     username = '';
     password = '';
-    message = "";
     errorMessage = '';
     newPassword: string = "";
     users: User[] = [];
     testCompleted: boolean = false;
     isAdmin: boolean = false;
 
-    EditUsername: string="";
+    EditUsername: string = "";
     token: string | null = null;
     questions: Question[] = [];
     answers: number[] = [];
@@ -56,7 +58,7 @@ export class AppComponent {
     title = 'my-app';
     showSubmitButton = true;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, public dialog: MatDialog) { }
 
     ngOnInit() {
     }
@@ -64,7 +66,7 @@ export class AppComponent {
 
     login() {
         this.http
-            .post<{ token: string }>('http://localhost:3000/login', { username: this.username, password: this.password })
+            .post<{ token: string }>(this.adres + '/login', { username: this.username, password: this.password })
             .subscribe(
                 (res) => {
                     localStorage.setItem('token', res.token);
@@ -74,7 +76,7 @@ export class AppComponent {
                         const decodedToken = jwt_decode<{ user_id: number; isAdmin: boolean }>(this.token);
                         if (decodedToken.isAdmin) {//если зашёл админ
                             this.isAdmin = true;
-                            this.http.get<Result[]>('http://localhost:3000/results', {
+                            this.http.get<Result[]>(this.adres + '/results', {
                                 headers: new HttpHeaders({
                                     Authorization: `Bearer ${this.token}`,
                                 }),
@@ -82,7 +84,7 @@ export class AppComponent {
                                 .subscribe((data) => {
                                     this.results = data; //as unknown as GroupedResults;
                                 });
-                            this.http.get<number>('http://localhost:3000/user-count', {
+                            this.http.get<number>(this.adres + '/user-count', {
                                 headers: new HttpHeaders({
                                     Authorization: `Bearer ${this.token}`,
                                 }),
@@ -90,7 +92,7 @@ export class AppComponent {
                                 .subscribe((count) => {
                                     this.userCount = count;
                                 });
-                            this.http.get<string[]>('http://localhost:3000/users-not-completed', {
+                            this.http.get<string[]>(this.adres + '/users-not-completed', {
                                 headers: new HttpHeaders({
                                     Authorization: `Bearer ${this.token}`,
                                 }),
@@ -99,7 +101,7 @@ export class AppComponent {
                                     this.usersNotCompleted = users;
                                 });
                             this.http
-                                .get<User[]>('http://localhost:3000/users', {
+                                .get<User[]>(this.adres + '/users', {
                                     headers: new HttpHeaders({
                                         Authorization: `Bearer ${this.token}`,
                                     }),
@@ -115,7 +117,7 @@ export class AppComponent {
                         else {
 
                             this.http
-                                .get<Question[]>('http://localhost:3000/test', {
+                                .get<Question[]>(this.adres + '/test', {
                                     headers: new HttpHeaders({
                                         Authorization: `Bearer ${this.token}`,
                                     }),
@@ -135,25 +137,37 @@ export class AppComponent {
                                     this.showSubmitButton = false;
 
                                     if (error.status === 500) {
-                                        this.errorMessage = 'Internal server error';
+                                        this.openErrorDialog('Internal server error')
                                     } else if (error.status === 403) {
-                                        this.errorMessage = 'You have already taken the test';
+                                        this.openErrorDialog('Вы уже проходили этот тест, данный тест можно пройти только один раз')
                                     } else if (error.status === 401) {
-                                        this.errorMessage = 'Unauthorized: Invalid username or password.';
+                                        this.openErrorDialog('Вы не авторизованы,те вас нет в базе данных')
                                     } else {
-                                        this.errorMessage = 'An error occurred while logging in. Please try again.';
+                                        this.openErrorDialog('Какие-то неполадки, попробуйте еще раз то, что вы делали или обратитесь к админу')
                                     }
                                 });
                         }
                     }
-                }
-            );
+                },
+                (error) => {
+                    this.showSubmitButton = false;
+
+                    if (error.status === 500) {
+                        this.openErrorDialog('Internal server error')
+                    } else if (error.status === 403) {
+                        this.openErrorDialog('Вы уже проходили этот тест, данный тест можно пройти только один раз')
+                    } else if (error.status === 401) {
+                        this.openErrorDialog('Вы не авторизованы,те вас нет в базе данных')
+                    } else {
+                        this.openErrorDialog('Какие-то неполадки, попробуйте еще раз то, что вы делали или обратитесь к админу')
+                    }
+                });
     }
 
     onSubmit() {
         this.http
             .post(
-                'http://localhost:3000/test',
+                this.adres + '/test',
                 { answers: this.answers }, {
                 headers: new HttpHeaders({
                     'Content-Type': 'application/json',
@@ -163,38 +177,35 @@ export class AppComponent {
             )
             .subscribe((data) => {
                 console.log(data);
-            }); location.reload();
+            });
+        this.openErrorDialog("Спасиба за ваши овтеты")
+        setTimeout(function () {
+            location.reload();
+        }, 2000);
     }
 
     changePassword() {
         // Получаем токен из localStorage
         const token = localStorage.getItem('token');
-    
+
         // Отправляем запрос на сервер для изменения пароля пользователя
         this.http
-          .post<{ message: string }>(
-            'http://localhost:3000/change-password',
-            { username: this.EditUsername, newPassword: this.newPassword },
-            {
-              headers: new HttpHeaders({
-                Authorization: `Bearer ${token}`,
-              }),
-            }
-          )
-          .subscribe(
-            (res) => {
-              this.message = res.message;
-            },
-            (err) => {
-              this.message = err.error;
-            }
-          );
-          
-      }
+            .post<{ message: string }>(
+                this.adres + '/change-password',
+                { username: this.EditUsername, newPassword: this.newPassword },
+                {
+                    headers: new HttpHeaders({
+                        Authorization: `Bearer ${token}`,
+                    }),
+                }
+            )
+        this.openErrorDialog("Был изменен пользователь с именем:" + this.EditUsername + " новый пароль:" + this.newPassword)
+
+    }
     isFormValid() {
         return this.answers.every((answer) => answer !== undefined);
     }
-   
+
     checkTestCompleted(userId: string) {
         this.http
             .get<CheckTestCompletedResponse>(`/check-test-completed/${userId}`)
@@ -202,7 +213,15 @@ export class AppComponent {
     }
 
 
+    openErrorDialog(inf: string) {
+        const dialogRef = this.dialog.open(ErrorDialogComponent, {
+            data: { errorMessage: inf }
+        });
 
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 
 
 }

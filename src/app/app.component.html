@@ -1,3 +1,4 @@
+<div class="container">
 <div *ngIf="!isAdmin" class="login">
     <form *ngIf="!token" (ngSubmit)="login()">
       <input type="text" placeholder="Username" [(ngModel)]="username" name="username" />
@@ -43,7 +44,6 @@
         </button>
     </form>
 </div>
-    <div class="message">{{ message }}</div>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
 </div>
@@ -87,7 +87,6 @@
         </tr>
     </table>
    
-    <p >{{ message }}</p>
     <br>
     <h1>Изменение пароля пользователя</h1>
     <form (ngSubmit)="changePassword()">
@@ -100,4 +99,5 @@
       <button type="submit">Изменить пароль</button>
     </form>
     
+</div>
 </div>

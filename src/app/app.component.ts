@@ -53,7 +53,20 @@ export class AppComponent {
     results: Result[] = [];
     userCount: number = 0;
     usersNotCompleted: string[] = [];
+    Squestions: any;
 
+    questionId:any;
+    tableName = '';
+    tableName1= '';
+    tableName2= '';
+    answersName= '';
+    question = '';
+    option1 = '';
+    option2 = '';
+    option3 = '';
+    option4 = '';
+    option5 = '';
+    tables: any;;
 
     title = 'my-app';
     showSubmitButton = true;
@@ -111,7 +124,19 @@ export class AppComponent {
                                 });
 
 
-
+                            this.http.get(this.adres + '/tables', {
+                                headers: new HttpHeaders({
+                                    Authorization: `Bearer ${this.token}`,
+                                }),
+                            }).subscribe(
+                                (data:any) => {
+                                    this.tables = data.map((row: any) => row.table_name);
+                                },
+                                (error) => {
+                                    // Handle error response
+                                    console.error(error);
+                                }
+                            );
                         }
 
                         else {
@@ -213,7 +238,7 @@ export class AppComponent {
     }
 
 
-    openErrorDialog(inf: string) {
+    openErrorDialog(inf: any) {
         const dialogRef = this.dialog.open(ErrorDialogComponent, {
             data: { errorMessage: inf }
         });
@@ -222,6 +247,66 @@ export class AppComponent {
             console.log(`Dialog result: ${result}`);
         });
     }
+    createTables() {
+        this.http.post(this.adres + '/create-tables', { tableName: this.tableName, answersName: this.answersName }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        }).subscribe(
+            (res) => {
+                console.log(res);
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+    }
+    
+    addQuestion() {
+        this.http.post(this.adres + '/add-question', { tableName: this.tableName1, question: this.question, option1: this.option1, option2: this.option2, option3: this.option3, option4: this.option4, option5: this.option5 }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        }).subscribe(
+            (res) => {
+                console.log(res);
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+    }
+
+    updateQuestion() {
+        this.http.post(this.adres + '/update-question', { tableName: this.tableName2, questionId: this.questionId, question: this.question, option1: this.option1, option2: this.option2, option3: this.option3, option4: this.option4, option5: this.option5 }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        }).subscribe(
+            (res) => {
+                console.log(res);
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
+    }
+    getQuestions() {
+        this.http.get(this.adres + '/get-questions?tableName='+this.tableName2, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        })
+        .subscribe(
+            (data) => {
+              this.Squestions = data;
+              console.log(data)
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
+        }
+    }
 
 
-}

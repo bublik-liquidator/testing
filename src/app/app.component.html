@@ -1,102 +1,190 @@
 <div class="container">
-<div *ngIf="!isAdmin" class="login">
-    <form *ngIf="!token" (ngSubmit)="login()">
-      <input type="text" placeholder="Username" [(ngModel)]="username" name="username" />
-      <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
-      <button type="submit">Log in</button>
-    </form>
+    <div *ngIf="!isAdmin" class="login">
+        <form *ngIf="!token" (ngSubmit)="login()">
+            <input type="text" placeholder="Username" [(ngModel)]="username" name="username" />
+            <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
+            <button type="submit">Log in</button>
+        </form>
 
 
-<div class="table-container" class="questionsr" >
+        <div class="table-container" class="questionsr">
 
-    <form *ngIf="token" (ngSubmit)="onSubmit()">
-        <div *ngFor="let question of questions; let i = index">
-            <h2> {{ i + 1 }}: {{ question.question }}</h2>
-            <label>
-                <input type="radio" name="{{ 'answer' + i }}" [value]="1" [(ngModel)]="answers[i]" />
-                {{ question.option1 }}
-            </label>
-            <br />
-            <label>
-                <input type="radio" name="{{ 'answer' + i }}" [value]="2" [(ngModel)]="answers[i]" />
-                {{ question.option2 }}
-            </label>
-            <br />
-            <label>
-                <input type="radio" name="{{ 'answer' + i }}" [value]="3" [(ngModel)]="answers[i]" />
-                {{ question.option3 }}
-            </label>
-            <br />
-            <label>
-                <input type="radio" name="{{ 'answer' + i }}" [value]="4" [(ngModel)]="answers[i]" />
-                {{ question.option4 }}
-            </label>
-            <br />
-            <label>
-                <input type="radio" name="{{ 'answer' + i }}" [value]="5" [(ngModel)]="answers[i]" />
-                {{ question.option5 }}
-            </label>
-            <br />
+            <form *ngIf="token" (ngSubmit)="onSubmit()">
+                <div *ngFor="let question of questions; let i = index">
+                    <h2> {{ i + 1 }}: {{ question.question }}</h2>
+                    <label>
+                        <input type="radio" name="{{ 'answer' + i }}" [value]="1" [(ngModel)]="answers[i]" />
+                        {{ question.option1 }}
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" name="{{ 'answer' + i }}" [value]="2" [(ngModel)]="answers[i]" />
+                        {{ question.option2 }}
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" name="{{ 'answer' + i }}" [value]="3" [(ngModel)]="answers[i]" />
+                        {{ question.option3 }}
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" name="{{ 'answer' + i }}" [value]="4" [(ngModel)]="answers[i]" />
+                        {{ question.option4 }}
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio" name="{{ 'answer' + i }}" [value]="5" [(ngModel)]="answers[i]" />
+                        {{ question.option5 }}
+                    </label>
+                    <br />
+                </div>
+                <button *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"
+                    [class.not-allowed-icon]="!isFormValid()">
+                    Отправить
+                </button>
+            </form>
         </div>
-        <button  *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"
-            [class.not-allowed-icon]="!isFormValid()">
-            Отправить
-        </button>
-    </form>
-</div>
 
-</div>
-<div class="table-container" *ngIf="token && username === 'admin'">
-    <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{ userCount }}</p>
-    <h2>Пользователи, которые не прошли тест:</h2>
-    <ul>
-        <li *ngFor="let user of usersNotCompleted">{{ user }}</li>
-    </ul>
-    <table>
-        <tr>
-            <th>Вопрос</th>
-            <th>Полностью согласен</th>
-            <th>Скорее согласен</th>
-            <th>Отчасти согласен, отчасти нет</th>
-            <th>Полностью не согласен</th>
-            <th>Затрудняюсь ответить, не могу оценить</th>
-        </tr>
-        <tr *ngFor="let result of results">
-            <td>{{ result.question }}</td>
-            <td>{{ result.option1_count }}</td>
-            <td>{{ result.option2_count }}</td>
-            <td>{{ result.option3_count }}</td>
-            <td>{{ result.option4_count }}</td>
-            <td>{{ result.option5_count }}</td>
-        </tr>
-    </table>
-    <br>
-    <!-- <input type="text" [(ngModel)]="username" placeholder="Username" />
+    </div>
+    <div class="table-container" *ngIf="token && username === 'admin'">
+        <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{ userCount }}
+        </p>
+        <h2>Пользователи, которые не прошли тест:</h2>
+        <ul>
+            <li *ngFor="let user of usersNotCompleted">{{ user }}</li>
+        </ul>
+        <table>
+            <tr>
+                <th>Вопрос</th>
+                <th>Полностью согласен</th>
+                <th>Скорее согласен</th>
+                <th>Отчасти согласен, отчасти нет</th>
+                <th>Полностью не согласен</th>
+                <th>Затрудняюсь ответить, не могу оценить</th>
+            </tr>
+            <tr *ngFor="let result of results">
+                <td>{{ result.question }}</td>
+                <td>{{ result.option1_count }}</td>
+                <td>{{ result.option2_count }}</td>
+                <td>{{ result.option3_count }}</td>
+                <td>{{ result.option4_count }}</td>
+                <td>{{ result.option5_count }}</td>
+            </tr>
+        </table>
+        <br>
+        <!-- <input type="text" [(ngModel)]="username" placeholder="Username" />
     <input type="password" [(ngModel)]="newPassword" placeholder="New Password" />
     <button (click)="changePassword(username, newPassword)">Change Password</button> -->
-    <table>
-        <tr>
-            <th>Username</th>
-            <th>Password</th>
-        </tr>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
 
-        <tr *ngFor="let user of users">
-            <td>{{ user.username }}</td>
-            <td>{{ user.password }}</td>
-        </tr>
-    </table>
-   
-    <br>
-    <h1>Изменение пароля пользователя</h1>
-    <form (ngSubmit)="changePassword()">
-      <label for="username">Имя пользователя:</label>
-      <input type="text" id="username" [(ngModel)]="EditUsername" name="username" />
-      <br />
-      <label for="newPassword">Новый пароль:</label>
-      <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" />
-      <br />
-      <button type="submit">Изменить пароль</button>
-    </form>
-    
-</div>
+            <tr *ngFor="let user of users">
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+            </tr>
+        </table>
+        <br>
+        -----------------------------------------------------------------------------------------
+        <br>
+        <h1>Изменение пароля пользователя</h1>
+        <form (ngSubmit)="changePassword()">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" [(ngModel)]="EditUsername" name="username" />
+            <br />
+            <label for="newPassword">Новый пароль:</label>
+            <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword" />
+            <br />
+            <button type="submit">Изменить пароль</button>
+        </form>
+        <br>
+        -----------------------------------------------------------------------------------------
+        <br>
+        <h2>Список таблиц</h2>
+        <ul>
+            <li *ngFor="let table of tables">{{ table }}</li>
+
+        </ul>
+        <br>
+        <br>
+         <br>
+        ---------------------------------Add Вопроса в указанную таблицу--------------------------------------------------------
+        <form (submit)="addQuestion()">
+            <div>
+                <label for="tableName">Table Name:</label>
+                <input type="text" id="tableName" [(ngModel)]="tableName1" name="tableName">
+            </div>
+            <div>
+                <label for="question">Question:</label>
+                <input type="text" id="question" [(ngModel)]="question" name="question">
+            </div>
+            <div>
+                <label for="option1">Option 1:</label>
+                <input type="text" id="option1" [(ngModel)]="option1" name="option1">
+            </div>
+            <div>
+                <label for="option2">Option 2:</label>
+                <input type="text" id="option2" [(ngModel)]="option2" name="option2">
+            </div>
+            <div>
+                <label for="option3">Option 3:</label>
+                <input type="text" id="option3" [(ngModel)]="option3" name="option3">
+            </div>
+            <div>
+                <label for="option4">Option 4:</label>
+                <input type="text" id="option4" [(ngModel)]="option4" name="option4">
+            </div>
+            <div>
+                <label for="option5">Option 5:</label>
+                <input type="text" id="option5" [(ngModel)]="option5" name="option5">
+            </div>
+            <button type="submit">Add Question</button>
+        </form>
+        <br>
+        --------------------------------------createTables---------------------------------------------------
+        <form (submit)="createTables()">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" [(ngModel)]="tableName" name="tableName">
+            <label for="answersName">Answers Table Name:</label>
+            <input type="text" id="answersName" [(ngModel)]="answersName" name="answersName">
+            <button type="submit">Create Tables</button>
+          </form>
+          <br>
+          <br>
+        --------------------------------------Получаем вопрос в указаной таблице---------------------------------------------------
+          <form (submit)="getQuestions()">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" [(ngModel)]="tableName2" name="tableName">
+            <div *ngIf="questions">
+                <h2>Questions</h2>
+                <ul>
+                  <li *ngFor="let question of Squestions">{{ question.id }}-{{ question.question }}</li>
+                </ul>
+              </div>
+            <button type="submit">Get Questions</button>
+          </form>
+        ---------------------------- updateQuestion -------------------------------------------------------------
+        <form (submit)="updateQuestion()">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" [(ngModel)]="tableName2" name="tableName">
+            <label for="questionId">Question ID:</label>
+            <input type="number" id="questionId" [(ngModel)]="questionId" name="questionId">
+            <label for="question">Question:</label>
+            <input type="text" id="question" [(ngModel)]="question" name="question">
+            <label for="option1">Option 1:</label>
+            <input type="text" id="option1" [(ngModel)]="option1" name="option1">
+            <label for="option2">Option 2:</label>
+            <input type="text" id="option2" [(ngModel)]="option2" name="option2">
+            <label for="option3">Option 3:</label>
+            <input type="text" id="option3" [(ngModel)]="option3" name="option3">
+            <label for="option4">Option 4:</label>
+            <input type="text" id="option4" [(ngModel)]="option4" name="option4">
+            <label for="option5">Option 5:</label>
+            <input type="text" id="option5" [(ngModel)]="option5" name="option5">
+            <button type="submit">Update Question</button>
+          </form>
+    </div>
+
 </div>

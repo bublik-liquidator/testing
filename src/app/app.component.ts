@@ -316,31 +316,29 @@ export class AppComponent {
             }
           );
         }
-        getUsers() {
-            const token = localStorage.getItem('token');
-        
+        getUsers(tableName:any) {
+            console.log(tableName)
             this.http
               .get<User[]>(this.adres + '/users', {
                 headers: new HttpHeaders({
-                  Authorization: `Bearer ${token}`,
+                  Authorization: `Bearer ${this.token}`,
                 }),
                 params: {
-                  tableName: this.tableName,
+                  tableName: tableName,
                 },
               })
               .subscribe(
                 (data) => {
                   this.users = data;
+
                 },
                 (err) => {
                   console.error(err);
+                  this.openErrorDialog("Не успешно "+err);
+
                 }
-              );
-          }
-      
-
-
-
+              ); 
     }
+    
 
-
+}

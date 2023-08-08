@@ -72,33 +72,30 @@
             </tr>
         </table>
         <br>
-        <hr> 
+        <hr>
 
-        <h1 class="title">Получить имена юзеров</h1>
-        <form (ngSubmit)="getUsers()" #getUsersForm="ngForm">
-          <div>
-            <label for="table-name">Введите название таблицы ниже появятся имена юзеров в указанной вами таблицы:</label>
-            <input type="text" id="table-name" name="tableName" ngModel required>
-          </div>        
-          <button type="submit">Получить</button>
-        </form>
-        
-        <ul>
-          <li *ngFor="let user of users">{{ user.username }}</li>
-        </ul>
-        <hr> 
 
+        <h1 class="title">Получить пользователей из таблицы</h1>
+        <div class="form-container">
+            <label for="table-name">Имя таблицы:</label>
+            <input [(ngModel)]="tableName" name="tableName" />
+            <button (click)="getUsers(tableName)">Получить</button>
+            <ul>
+                <li *ngFor="let user of users">{{ user.username }}</li>
+            </ul>
+        </div>
+        <hr>
         <h1 class="title">Это список всех доступных таблиц</h1>
         <div class="tablesList">
             <h2>Список таблиц</h2>
             <ul>
                 <li *ngFor="let table of tables">{{ table }}</li>
-            </ul>           
+            </ul>
         </div>
-        <hr> 
+        <hr>
 
         <h1 class="title">Изменить пароль юзеру</h1>
-        <div class="ChangeUserPassword">            
+        <div class="ChangeUserPassword">
             <form (ngSubmit)="changePassword()" #changePasswordForm="ngForm">
                 <div>
                     <label for="table-name">Имя таблице в которой хранится юзер:</label>
@@ -115,7 +112,7 @@
                 <button type="submit">Изменить</button>
             </form>
         </div>
-        <hr> 
+        <hr>
 
         <h1 class="title">Добавить новый вопрос в указанную таблицу</h1>
         <div class="addQuestion">
@@ -129,29 +126,29 @@
                     <input type="text" id="question" [(ngModel)]="question" name="question">
                 </div>
                 <div>
-                    <label for="option1">Вариант ответа  1:</label>
+                    <label for="option1">Вариант ответа 1:</label>
                     <input type="text" id="option1" [(ngModel)]="option1" name="option1">
                 </div>
                 <div>
-                    <label for="option2">Вариант ответа  2:</label>
+                    <label for="option2">Вариант ответа 2:</label>
                     <input type="text" id="option2" [(ngModel)]="option2" name="option2">
                 </div>
                 <div>
-                    <label for="option3">Вариант ответа  3:</label>
+                    <label for="option3">Вариант ответа 3:</label>
                     <input type="text" id="option3" [(ngModel)]="option3" name="option3">
                 </div>
                 <div>
-                    <label for="option4">Вариант ответа  4:</label>
+                    <label for="option4">Вариант ответа 4:</label>
                     <input type="text" id="option4" [(ngModel)]="option4" name="option4">
                 </div>
                 <div>
-                    <label for="option5">Вариант ответа   5:</label>
+                    <label for="option5">Вариант ответа 5:</label>
                     <input type="text" id="option5" [(ngModel)]="option5" name="option5">
                 </div>
                 <button type="submit">Добавить вопрос</button>
             </form>
         </div>
-        <hr> 
+        <hr>
 
         <h1 class="title">Создать новую таблицу(ы)</h1>
         <div class="createTables">
@@ -166,7 +163,7 @@
             </form>
             <button type="submit">Создать таблицы</button>
         </div>
-        
+
 
         <h1 class="title">Получить ID вопроса в указанной таблице с вопросами</h1>
         <div class="getQuestions">
@@ -176,20 +173,22 @@
                 <div *ngIf="questions">
                     <h2>Вопрос</h2>
                     <ul>
-                        <li *ngFor="let question of Squestions">ID:{{ question.id }} -{{ question.question }}</li>
+                        <li *ngFor="let question of Squestions">
+                            ID:<strong>{{ question.id }}</strong> -{{ question.question }}
+                        </li>
                     </ul>
                 </div>
                 <button type="submit">Получить список вопросов</button>
             </form>
         </div>
-        <hr> 
+        <hr>
 
         <h1 class="title">Обновить вопрос и ответы на него</h1>
         <div class="updateQuestion">
             <form (submit)="updateQuestion()">
                 <label for="tableName">Введите имя таблицы в которой лежит ваш вопрос:</label>
                 <input type="text" id="tableName" [(ngModel)]="tableName2" name="tableName">
-                <label for="questionId">Введите ID вопроса:</label> 
+                <label for="questionId">Введите ID вопроса:</label>
                 <input type="number" id="questionId" [(ngModel)]="questionId" name="questionId">
                 <br>Чтобы получить ID вопроса см пункт Получить ID вопроса в указанной таблице с вопросами<br>
                 <label for="question">Новый текст вопроса:</label>

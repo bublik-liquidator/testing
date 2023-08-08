@@ -54,7 +54,8 @@ export class AppComponent {
     userCount: number = 0;
     usersNotCompleted: string[] = [];
     Squestions: any;
-
+    users_create_tables:any;
+    tableName_change_password:any;
     questionId:any;
     tableName = '';
     tableName1= '';
@@ -113,15 +114,7 @@ export class AppComponent {
                                 .subscribe((users) => {
                                     this.usersNotCompleted = users;
                                 });
-                            this.http
-                                .get<User[]>(this.adres + '/users', {
-                                    headers: new HttpHeaders({
-                                        Authorization: `Bearer ${this.token}`,
-                                    }),
-                                })
-                                .subscribe((data) => {
-                                    this.users = data;
-                                });
+                          
 
 
                             this.http.get(this.adres + '/tables', {
@@ -210,23 +203,32 @@ export class AppComponent {
     }
 
     changePassword() {
-        // Получаем токен из localStorage
+        // Get the token from localStorage
         const token = localStorage.getItem('token');
-
-        // Отправляем запрос на сервер для изменения пароля пользователя
+      
+        // Send a request to the server to change the user's password
         this.http
-            .post<{ message: string }>(
-                this.adres + '/change-password',
-                { username: this.EditUsername, newPassword: this.newPassword },
-                {
-                    headers: new HttpHeaders({
-                        Authorization: `Bearer ${token}`,
-                    }),
-                }
-            )
-        this.openErrorDialog("Был изменен пользователь с именем:" + this.EditUsername + " новый пароль:" + this.newPassword)
+          .post<{ message: string }>(
+            this.adres + '/change-password',
+            { username: this.EditUsername, newPassword: this.newPassword, tableName: this.tableName_change_password },
+            {
+              headers: new HttpHeaders({
+                Authorization: `Bearer ${token}`,
+              }),
+            }
+          )
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.openErrorDialog("The password for user " + this.EditUsername + " has been changed to " + this.newPassword);
+            },
+            (err) => {
+              console.error(err);
+            }
+          );
+      }
 
-    }
+
     isFormValid() {
         return this.answers.every((answer) => answer !== undefined);
     }
@@ -248,19 +250,22 @@ export class AppComponent {
         });
     }
     createTables() {
-        this.http.post(this.adres + '/create-tables', { tableName: this.tableName, answersName: this.answersName }, {
-            headers: new HttpHeaders({
-                Authorization: `Bearer ${this.token}`,
-            }),
+        this.http.post(this.adres + '/create-tables', { tableName: this.tableName, answersName: this.answersName, users: this.users_create_tables }, {
+          headers: new HttpHeaders({
+            Authorization: `Bearer ${this.token}`,
+          }),
         }).subscribe(
-            (res) => {
-                console.log(res);
-            },
-            (err) => {
-                console.error(err);
-            }
+          (res) => {
+            console.log(res);
+            this.openErrorDialog("Успешно "+res);
+
+          },
+          (err) => {
+            this.openErrorDialog("Не успешно "+err);
+            console.error(err);
+          }
         );
-    }
+      }
     
     addQuestion() {
         this.http.post(this.adres + '/add-question', { tableName: this.tableName1, question: this.question, option1: this.option1, option2: this.option2, option3: this.option3, option4: this.option4, option5: this.option5 }, {
@@ -269,9 +274,11 @@ export class AppComponent {
             }),
         }).subscribe(
             (res) => {
+                this.openErrorDialog("Успешно "+res);
                 console.log(res);
             },
             (err) => {
+                this.openErrorDialog("Не успешно "+err);
                 console.error(err);
             }
         );
@@ -284,9 +291,11 @@ export class AppComponent {
             }),
         }).subscribe(
             (res) => {
+                this.openErrorDialog("Успешно "+res);
                 console.log(res);
             },
             (err) => {
+                this.openErrorDialog("Не успешно "+err);
                 console.error(err);
             }
         );
@@ -307,6 +316,31 @@ export class AppComponent {
             }
           );
         }
+        getUsers() {
+            const token = localStorage.getItem('token');
+        
+            this.http
+              .get<User[]>(this.adres + '/users', {
+                headers: new HttpHeaders({
+                  Authorization: `Bearer ${token}`,
+                }),
+                params: {
+                  tableName: this.tableName,
+                },
+              })
+              .subscribe(
+                (data) => {
+                  this.users = data;
+                },
+                (err) => {
+                  console.error(err);
+                }
+              );
+          }
+      
+
+
+
     }
 
 

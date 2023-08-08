@@ -136,6 +136,41 @@ th {
   margin: auto;
 }
 
+.table-name {
+  background-color: #f0f8ff;
+  padding: 10px;
+}
+
+.ChangeUserPassword {
+  background-color: #f5f5dc;
+  padding: 10px;
+}
+
+.tablesList {
+  background-color: #e6e6fa;
+  padding: 10px;
+}
+
+.addQuestion {
+  background-color: #fffacd;
+  padding: 10px;
+}
+
+.createTables {
+  background-color: #f0f8ff;
+  padding: 10px;
+}
+
+.getQuestions {
+  background-color: #f5f5dc;
+  padding: 10px;
+}
+
+.updateQuestion {
+  background-color: #e6e6fa;
+  padding: 10px;
+}
+
 @media (max-width: 500px) {
   .container {
     max-width: 95%;
@@ -148,10 +183,12 @@ th {
     margin: auto;
     word-wrap: break-word;
   }
-.question {
+
+  .question {
     text-align: center;
     word-wrap: break-word;
   }
+
   .questionsr form {
     font-family: Arial, sans-serif;
     max-width: 100%;
@@ -189,4 +226,18 @@ th {
     border: 2px solid #ccc;
     border-radius: 4px;
   }
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed #000;
+  margin: 20px 0;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #4a86e8;
+  text-shadow: 1px 1px #fff;
 }

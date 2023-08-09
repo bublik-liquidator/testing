@@ -85,12 +85,15 @@
             </ul>
         </div>
         <hr>
+
         <h1 class="title">Это список всех доступных таблиц</h1>
         <div class="tablesList">
             <h2>Список таблиц</h2>
             <ul>
                 <li *ngFor="let table of tables">{{ table }}</li>
             </ul>
+            <button (click)="GetTables()">Получить таблицы</button>
+
         </div>
         <hr>
 
@@ -98,16 +101,17 @@
         <div class="ChangeUserPassword">
             <form (ngSubmit)="changePassword()" #changePasswordForm="ngForm">
                 <div>
-                    <label for="table-name">Имя таблице в которой хранится юзер:</label>
-                    <input type="text" id="table-name" name="tableName" ngModel required>
+                    <label for="tableName_change_password">Имя таблице в которой хранится юзер:</label>
+                    <input type="text" id="createtableName" [(ngModel)]="tableName_change_password"
+                        name="tableName_change_password" required>
                 </div>
                 <div>
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" ngModel required>
+                    <label for="createusername">Username:</label>
+                    <input type="text" id="createusername" [(ngModel)]="createusername" name="createusername" required>
                 </div>
                 <div>
                     <label for="new-password">Новый Password:</label>
-                    <input type="password" id="new-password" name="newPassword" ngModel required>
+                    <input type="text" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required>
                 </div>
                 <button type="submit">Изменить</button>
             </form>
@@ -150,20 +154,21 @@
         </div>
         <hr>
 
+
         <h1 class="title">Создать новую таблицу(ы)</h1>
         <div class="createTables">
-            <form (submit)="createTables()">
-                <label for="tableName">Имя таблицы с вопросами и ответами на них:</label>
-                <input type="text" id="tableName" [(ngModel)]="tableName" name="tableName">
+            <form (ngSubmit)="createTables()" #createTablesForm="ngForm">
+                <label for="NewtableName">Имя таблицы с вопросами и ответами на них:</label>
+                <input type="text" id="NewtableName" [(ngModel)]="NewtableName" name="NewtableName">
                 <label for="answersName">Имя таблицы где будут храниться ответы юзеров:</label>
                 <input type="text" id="answersName" [(ngModel)]="answersName" name="answersName">
                 <label for="users_create_tables">Имя таблицы с юзерами:</label>
                 <input type="text" id="users_create_tables" [(ngModel)]="users_create_tables"
                     name="users_create_tables">
+                    <br>
+                <button type="submit">Создать таблицы</button>
             </form>
-            <button type="submit">Создать таблицы</button>
         </div>
-
 
         <h1 class="title">Получить ID вопроса в указанной таблице с вопросами</h1>
         <div class="getQuestions">
@@ -207,6 +212,54 @@
                 <button type="submit">Обновить вопрос</button>
             </form>
         </div>
+        <hr>
+        <h1 class="title">Создать нового юзера в указанной таблице</h1>
+        <div class="createUsers">
+            <form (ngSubmit)="createUsers()">
+                <label for="createtableName">Имя таблицы куда добавить юзера:</label>
+                <input type="text" id="createtableName" [(ngModel)]="createtableName" name="createtableName" required>
+
+                <label for="createusername">Username:</label>
+                <input type="text" id="createusername" [(ngModel)]="createusername" name="createusername" required>
+
+                <label for="createpassword">Password:</label>
+                <input type="createpassword" id="createpassword" [(ngModel)]="createpassword" name="createpassword"
+                    required>
+
+                <label for="createrole">Role:</label>
+                <input type="text" id="role" [(ngModel)]="createrole" name="createrole" required>
+                <br>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+        <hr>
+
+        <h1 class="title">Получить иформацию по таблиwе где лежат ID юзеров и их вариаты ответов(Ansswers)</h1>
+        <div class="getQuestions">
+            <form (submit)="getAnswers()">
+                <label for="tableName">Имя таблицы в которой лежит вопрос:</label>
+                <input type="text" id="tableName" [(ngModel)]="tableName2" name="tableName">
+                <div *ngIf="questions">
+                    <h2>Вопрос</h2>
+                    <ul>
+                        <li *ngFor="let answer of Ansswers">
+                            ID:<strong>{{ answer.id }}</strong> -{{ answer.user_id }} -- {{ answer.question_id  }}
+                        </li>
+                    </ul>
+                </div>
+                <button type="submit">Получить иформацию</button>
+            </form>
+        </div>
+        <hr>
+
+        <h1 class="title">Очистить ответы юзеров в таблице(Ansswers)</h1>
+        <form #clearTableForm="ngForm" (ngSubmit)="Clear(clearTableForm)">
+            <div>
+                <label for="tableName">Table Name:</label>
+                <input type="text" id="tableName" name="tableName" ngModel required>
+            </div>
+            <button type="submit">Clear Table</button>
+        </form>
     </div>
 
 </div>

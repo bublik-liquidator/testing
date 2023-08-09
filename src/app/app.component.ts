@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { NgForm } from '@angular/forms';
 interface Question {
     id: number;
     question: string;
@@ -54,21 +55,26 @@ export class AppComponent {
     userCount: number = 0;
     usersNotCompleted: string[] = [];
     Squestions: any;
-    users_create_tables:any;
-    tableName_change_password:any;
-    questionId:any;
+    users_create_tables: any;
+    tableName_change_password: any;
+    questionId: any;
     tableName = '';
-    tableName1= '';
-    tableName2= '';
-    answersName= '';
+    tableName1 = '';
+    tableName2 = '';
+    answersName = '';
     question = '';
     option1 = '';
     option2 = '';
     option3 = '';
     option4 = '';
     option5 = '';
-    tables: any;;
-
+    tables: any;
+    NewtableName = "";
+    createusername = '';
+    createpassword = '';
+    createrole = '';
+    createtableName = '';
+    Ansswers: any;
     title = 'my-app';
     showSubmitButton = true;
 
@@ -114,22 +120,7 @@ export class AppComponent {
                                 .subscribe((users) => {
                                     this.usersNotCompleted = users;
                                 });
-                          
 
-
-                            this.http.get(this.adres + '/tables', {
-                                headers: new HttpHeaders({
-                                    Authorization: `Bearer ${this.token}`,
-                                }),
-                            }).subscribe(
-                                (data:any) => {
-                                    this.tables = data.map((row: any) => row.table_name);
-                                },
-                                (error) => {
-                                    // Handle error response
-                                    console.error(error);
-                                }
-                            );
                         }
 
                         else {
@@ -205,28 +196,28 @@ export class AppComponent {
     changePassword() {
         // Get the token from localStorage
         const token = localStorage.getItem('token');
-      
+
         // Send a request to the server to change the user's password
         this.http
-          .post<{ message: string }>(
-            this.adres + '/change-password',
-            { username: this.EditUsername, newPassword: this.newPassword, tableName: this.tableName_change_password },
-            {
-              headers: new HttpHeaders({
-                Authorization: `Bearer ${token}`,
-              }),
-            }
-          )
-          .subscribe(
-            (res) => {
-              console.log(res);
-              this.openErrorDialog("The password for user " + this.EditUsername + " has been changed to " + this.newPassword);
-            },
-            (err) => {
-              console.error(err);
-            }
-          );
-      }
+            .post<{ message: string }>(
+                this.adres + '/change-password',
+                { username: this.EditUsername, newPassword: this.newPassword, tableName: this.tableName_change_password },
+                {
+                    headers: new HttpHeaders({
+                        Authorization: `Bearer ${token}`,
+                    }),
+                }
+            )
+            .subscribe(
+                (res) => {
+                    console.log(res);
+                    this.openErrorDialog("The password for user " + this.EditUsername + " has been changed to " + this.newPassword);
+                },
+                (err) => {
+                    console.error(err);
+                }
+            );
+    }
 
 
     isFormValid() {
@@ -250,23 +241,26 @@ export class AppComponent {
         });
     }
     createTables() {
-        this.http.post(this.adres + '/create-tables', { tableName: this.tableName, answersName: this.answersName, users: this.users_create_tables }, {
-          headers: new HttpHeaders({
-            Authorization: `Bearer ${this.token}`,
-          }),
+        console.log(this.NewtableName);
+        console.log(this.answersName);
+        console.log(this.users_create_tables);
+        this.http.post(this.adres + '/create-tables', { tableName: this.NewtableName, answersName: this.answersName, users: this.users_create_tables }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
         }).subscribe(
-          (res) => {
-            console.log(res);
-            this.openErrorDialog("Успешно "+res);
+            (res) => {
+                console.log(res);
+                this.openErrorDialog(res);
 
-          },
-          (err) => {
-            this.openErrorDialog("Не успешно "+err);
-            console.error(err);
-          }
+            },
+            (err) => {
+                this.openErrorDialog("Не успешно " + err);
+                console.error(err);
+            }
         );
-      }
-    
+    }
+
     addQuestion() {
         this.http.post(this.adres + '/add-question', { tableName: this.tableName1, question: this.question, option1: this.option1, option2: this.option2, option3: this.option3, option4: this.option4, option5: this.option5 }, {
             headers: new HttpHeaders({
@@ -274,11 +268,11 @@ export class AppComponent {
             }),
         }).subscribe(
             (res) => {
-                this.openErrorDialog("Успешно "+res);
+                this.openErrorDialog(res);
                 console.log(res);
             },
             (err) => {
-                this.openErrorDialog("Не успешно "+err);
+                this.openErrorDialog("Не успешно " + err);
                 console.error(err);
             }
         );
@@ -291,54 +285,126 @@ export class AppComponent {
             }),
         }).subscribe(
             (res) => {
-                this.openErrorDialog("Успешно "+res);
+                this.openErrorDialog(res);
                 console.log(res);
             },
             (err) => {
-                this.openErrorDialog("Не успешно "+err);
+                this.openErrorDialog("Не успешно " + err);
                 console.error(err);
             }
         );
     }
-    getQuestions() {
-        this.http.get(this.adres + '/get-questions?tableName='+this.tableName2, {
+    getAnswers() {
+        this.http.get(this.adres + '/get-ansver?tableName=' + this.tableName2, {
             headers: new HttpHeaders({
                 Authorization: `Bearer ${this.token}`,
             }),
         })
-        .subscribe(
-            (data) => {
-              this.Squestions = data;
-              console.log(data)
-            },
-            (error) => {
-              console.error(error);
-            }
-          );
-        }
-        getUsers(tableName:any) {
-            console.log(tableName)
-            this.http
-              .get<User[]>(this.adres + '/users', {
+            .subscribe(
+                (data) => {
+                    this.Ansswers = data;
+                    console.log(data)
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+    }
+    getQuestions() {
+        this.http.get(this.adres + '/get-questions?tableName=' + this.tableName2, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        })
+            .subscribe(
+                (data) => {
+                    this.Squestions = data;
+                    console.log(data)
+                },
+                (error) => {
+                    console.error(error);
+                }
+            );
+    }
+    getUsers(tableName: any) {
+        this.http
+            .get<User[]>(this.adres + '/users', {
                 headers: new HttpHeaders({
-                  Authorization: `Bearer ${this.token}`,
+                    Authorization: `Bearer ${this.token}`,
                 }),
                 params: {
-                  tableName: tableName,
+                    tableName: tableName,
                 },
-              })
-              .subscribe(
+            })
+            .subscribe(
                 (data) => {
-                  this.users = data;
+                    this.users = data;
 
                 },
                 (err) => {
-                  console.error(err);
-                  this.openErrorDialog("Не успешно "+err);
+                    console.error(err);
+                    this.openErrorDialog("Не успешно " + err);
 
                 }
-              ); 
+            );
     }
+
+    createUsers() {
+                // Send a POST request to the /add-user endpoint with the user data
+        this.http
+            .post(
+                this.adres + '/add-user',
+                {
+                    username: this.createusername,
+                    password: this.createpassword,
+                    role: this.createrole,
+                    tableName: this.createtableName,
+                },
+                {
+                    headers: new HttpHeaders({
+                        Authorization: `Bearer ${this.token}`,
+                    })
+
+                }
+            )
+            .subscribe((res) => {
+                console.log(res);
+                this.openErrorDialog(res);
+
+            });
+    }
+    GetTables() {
+        this.http.get(this.adres + '/tables', {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        }).subscribe(
+            (data: any) => {
+                this.tables = data.map((row: any) => row.table_name);
+            },
+            (error) => {
+                // Handle error response
+                console.error(error);
+            }
+        );
+    }
+
+    Clear(form: NgForm) {
+        if (form.valid) {
+          const formData = {
+            tableName: form.value.tableName
+          };
     
+          const headers = new HttpHeaders({
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          });
+    
+          this.http.post(this.adres + '/clear-table', formData, { headers }).subscribe(
+            res => this.openErrorDialog(res),
+            
+            err => this.openErrorDialog("Не успешно " + err)
+          );
+        }
+      }
 
 }

@@ -46,8 +46,8 @@ form h2 {
   text-align: left;
 }
 
-input[type="text"],
-input[type="password"] {
+
+input {
   width: 80%;
   max-width: 300px;
   padding: 12px 20px;
@@ -57,7 +57,7 @@ input[type="password"] {
   border-radius: 4px;
 }
 
-button[type="submit"] {
+button {
   width: 50%;
   max-width: 150px;
   background-color: #4CAF50;
@@ -286,4 +286,9 @@ ul {
 
 ul li {
   margin-bottom: 10px;
+}
+
+.createUsers{
+  background-color: #fffacd;
+  padding: 10px;
 }

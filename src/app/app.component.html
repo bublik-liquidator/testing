@@ -187,7 +187,7 @@
             </form>
         </div>
         <hr>
-
+       
         <h1 class="title">Обновить вопрос и ответы на него</h1>
         <div class="updateQuestion">
             <form (submit)="updateQuestion()">
@@ -198,16 +198,16 @@
                 <br>Чтобы получить ID вопроса см пункт Получить ID вопроса в указанной таблице с вопросами<br>
                 <label for="question">Новый текст вопроса:</label>
                 <input type="text" id="question" [(ngModel)]="question" name="question">
-                <label for="option1">Вариант ответа 1:</label>
-                <input type="text" id="option1" [(ngModel)]="option1" name="option1">
-                <label for="option2">Вариант ответа 2:</label>
-                <input type="text" id="option2" [(ngModel)]="option2" name="option2">
-                <label for="option3">Вариант ответа 3:</label>
-                <input type="text" id="option3" [(ngModel)]="option3" name="option3">
-                <label for="option4">Вариант ответа 4:</label>
-                <input type="text" id="option4" [(ngModel)]="option4" name="option4">
-                <label for="option5">Вариант ответа 5:</label>
-                <input type="text" id="option5" [(ngModel)]="option5" name="option5">
+                <label for="updateoption1">Вариант ответа 1:</label>
+                <input type="text" id="updateoption1" [(ngModel)]="updateoption1" name="updateoption1">
+                <label for="updateoption2">Вариант ответа 2:</label>
+                <input type="text" id="updateoption2" [(ngModel)]="updateoption2" name="updateoption2">
+                <label for="updateoption3">Вариант ответа 3:</label>
+                <input type="text" id="updateoption3" [(ngModel)]="updateoption3" name="updateoption3">
+                <label for="updateoption4">Вариант ответа 4:</label>
+                <input type="text" id="updateoption4" [(ngModel)]="updateoption4" name="updateoption4">
+                <label for="updateoption5">Вариант ответа 5:</label>
+                <input type="text" id="updateoption5" [(ngModel)]="updateoption5" name="updateoption5">
                 <br>
                 <button type="submit">Обновить вопрос</button>
             </form>
@@ -234,7 +234,7 @@
         </div>
         <hr>
 
-        <h1 class="title">Получить иформацию по таблиwе где лежат ID юзеров и их вариаты ответов(Ansswers)</h1>
+        <h1 class="title">Получить иформацию по таблиwе где лежат ID юзеров и их вариаты ответов(Ansvers)</h1>
         <div class="getQuestions">
             <form (submit)="getAnswers()">
                 <label for="tableName">Имя таблицы в которой лежит вопрос:</label>
@@ -252,11 +252,11 @@
         </div>
         <hr>
 
-        <h1 class="title">Очистить ответы юзеров в таблице(Ansswers)</h1>
+        <h1 class="title">Очистить ответы юзеров в таблице(Ansvers)</h1>
         <form #clearTableForm="ngForm" (ngSubmit)="Clear(clearTableForm)">
             <div>
-                <label for="tableName">Table Name:</label>
-                <input type="text" id="tableName" name="tableName" ngModel required>
+                <label for="tableNameClear">Table Name:</label>
+                <input type="text" id="tableNameClear" name="tableNameClear" ngModel required>
             </div>
             <button type="submit">Clear Table</button>
         </form>

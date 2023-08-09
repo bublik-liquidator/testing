@@ -68,6 +68,12 @@ export class AppComponent {
     option3 = '';
     option4 = '';
     option5 = '';
+
+    updateoption1 = '';
+    updateoption2 = '';
+    updateoption3 = '';
+    updateoption4 = '';
+    updateoption5 = '';
     tables: any;
     NewtableName = "";
     createusername = '';
@@ -211,7 +217,7 @@ export class AppComponent {
             .subscribe(
                 (res) => {
                     console.log(res);
-                    this.openErrorDialog("The password for user " + this.EditUsername + " has been changed to " + this.newPassword);
+                    this.openErrorDialog("Пароль для юзера " + this.EditUsername + " был изменён на " + this.newPassword);
                 },
                 (err) => {
                     console.error(err);
@@ -279,7 +285,7 @@ export class AppComponent {
     }
 
     updateQuestion() {
-        this.http.post(this.adres + '/update-question', { tableName: this.tableName2, questionId: this.questionId, question: this.question, option1: this.option1, option2: this.option2, option3: this.option3, option4: this.option4, option5: this.option5 }, {
+        this.http.post(this.adres + '/update-question', { tableName: this.tableName2, questionId: this.questionId, question: this.question, option1: this.updateoption1, option2: this.updateoption2, option3: this.updateoption3, option4: this.updateoption4, option5: this.updateoption5 }, {
             headers: new HttpHeaders({
                 Authorization: `Bearer ${this.token}`,
             }),
@@ -392,7 +398,7 @@ export class AppComponent {
     Clear(form: NgForm) {
         if (form.valid) {
           const formData = {
-            tableName: form.value.tableName
+            tableName: form.value.tableNameClear
           };
     
           const headers = new HttpHeaders({

@@ -1,6 +1,6 @@
 <div class="container">
     <div *ngIf="!isAdmin" class="login">
-        <form *ngIf="!token" (ngSubmit)="login()">
+        <form  class="login" *ngIf="!token" (ngSubmit)="login()">
             <input type="text" placeholder="Username" [(ngModel)]="username" name="username" />
             <input type="password" placeholder="Password" [(ngModel)]="password" name="password" />
             <button type="submit">Log in</button>
@@ -46,14 +46,17 @@
         </div>
 
     </div>
+
     <div class="table-container" *ngIf="token && username === 'admin'">
+       
         <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{ userCount }}
         </p>
         <h2>Пользователи, которые не прошли тест:</h2>
         <ul>
             <li *ngFor="let user of usersNotCompleted">{{ user }}</li>
         </ul>
-        <table>
+        <div class="answer">
+        <table class="tablicc">
             <tr>
                 <th>Вопрос</th>
                 <th>Полностью согласен</th>
@@ -71,6 +74,9 @@
                 <td>{{ result.option5_count }}</td>
             </tr>
         </table>
+    </div>
+    <button (click)="saveTable()">Save Table</button>
+
         <br>
         <hr>
 

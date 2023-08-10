@@ -5,7 +5,6 @@ body {
 
 .questionsr form {
   font-family: Arial, sans-serif;
-  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -20,7 +19,7 @@ label {
   cursor: pointer;
 }
 
-.login form {
+.login{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,10 +45,14 @@ form h2 {
   text-align: left;
 }
 
-
-input {
-  width: 80%;
-  max-width: 300px;
+input [type="radio"]{
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+input:not([type="radio"]) {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;

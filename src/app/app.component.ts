@@ -4,6 +4,17 @@ import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NgForm } from '@angular/forms';
+
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+
+import * as FileSaver from 'file-saver';
+
+declare module 'jspdf' {
+    interface jsPDF {
+        autoTable: typeof import('jspdf-autotable').default;
+    }
+}
 interface Question {
     id: number;
     question: string;
@@ -89,6 +100,31 @@ export class AppComponent {
     ngOnInit() {
     }
 
+
+    saveTable() {
+        const tableElement = document.querySelector('.tablicc');
+        if (tableElement) {
+          let tableHtml = tableElement.outerHTML;
+          tableHtml = tableHtml.replace(
+            /<table/g,
+            '<table style="border-collapse: collapse;"'
+          );
+          tableHtml = tableHtml.replace(
+            /<td/g,
+            '<td style="border: 1px solid black; padding: 5px;"'
+          );
+          tableHtml = tableHtml.replace(
+            /<th/g,
+            '<th style="border: 1px solid black; padding: 5px;"'
+          );
+          tableHtml = tableHtml.replace(/<br>/g, '\n');
+          const blob = new Blob([tableHtml], { type: 'application/vnd.ms-word' });
+          FileSaver.saveAs(blob, 'table.doc');
+        } else {
+          this.openErrorDialog('Table element not found');
+        }
+      }
+      
 
     login() {
         this.http
@@ -356,7 +392,7 @@ export class AppComponent {
     }
 
     createUsers() {
-                // Send a POST request to the /add-user endpoint with the user data
+        // Send a POST request to the /add-user endpoint with the user data
         this.http
             .post(
                 this.adres + '/add-user',
@@ -397,20 +433,20 @@ export class AppComponent {
 
     Clear(form: NgForm) {
         if (form.valid) {
-          const formData = {
-            tableName: form.value.tableNameClear
-          };
-    
-          const headers = new HttpHeaders({
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          });
-    
-          this.http.post(this.adres + '/clear-table', formData, { headers }).subscribe(
-            res => this.openErrorDialog(res),
-            
-            err => this.openErrorDialog("Не успешно " + err)
-          );
+            const formData = {
+                tableName: form.value.tableNameClear
+            };
+
+            const headers = new HttpHeaders({
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            });
+
+            this.http.post(this.adres + '/clear-table', formData, { headers }).subscribe(
+                res => this.openErrorDialog(res),
+
+                err => this.openErrorDialog("Не успешно " + err)
+            );
         }
-      }
+    }
 
 }

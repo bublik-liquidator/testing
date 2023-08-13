@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Montserrat", sans-serif;
+
 }
 
 .cdk-overlay-backdrop {
@@ -13,9 +15,14 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+
 }
 .mat-dialog-container {
     max-width: 80vw;
     padding: 20px;
   }
   
+p{
+  font-family: "Montserrat", sans-serif;
+ 
+}

@@ -4,32 +4,12 @@ import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { NgForm } from '@angular/forms';
-
-import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
-
 import * as FileSaver from 'file-saver';
+import { User } from './entities/user';
+import { Question } from './entities/question';
 
-declare module 'jspdf' {
-    interface jsPDF {
-        autoTable: typeof import('jspdf-autotable').default;
-    }
-}
-interface Question {
-    id: number;
-    question: string;
-    option1: string;
-    option2: string;
-    option3: string;
-    option4: string;
-    option5: string;
 
-}
 
-interface User {
-    username: string;
-    password: string;
-}
 interface Result {
     question: string;
     option1_count: number;
@@ -50,8 +30,11 @@ interface CheckTestCompletedResponse {
 export class AppComponent {
 
     adres: string = "http://localhost:3000";
-    username = '';
-    password = '';
+    user = new User();
+    question = new Question();
+    answersTable = "";
+    questionsTable = "";
+
     errorMessage = '';
     newPassword: string = "";
     users: User[] = [];
@@ -73,13 +56,9 @@ export class AppComponent {
     tableName1 = '';
     tableName2 = '';
     answersName = '';
-    question = '';
-    option1 = '';
-    option2 = '';
-    option3 = '';
-    option4 = '';
-    option5 = '';
+    get_ansver = "";
 
+    loginTable = ""
     updateoption1 = '';
     updateoption2 = '';
     updateoption3 = '';
@@ -94,7 +73,7 @@ export class AppComponent {
     Ansswers: any;
     title = 'my-app';
     showSubmitButton = true;
-
+    users_not_completed = ""
     constructor(private http: HttpClient, public dialog: MatDialog) { }
 
     ngOnInit() {
@@ -104,31 +83,31 @@ export class AppComponent {
     saveTable() {
         const tableElement = document.querySelector('.tablicc');
         if (tableElement) {
-          let tableHtml = tableElement.outerHTML;
-          tableHtml = tableHtml.replace(
-            /<table/g,
-            '<table style="border-collapse: collapse;"'
-          );
-          tableHtml = tableHtml.replace(
-            /<td/g,
-            '<td style="border: 1px solid black; padding: 5px;"'
-          );
-          tableHtml = tableHtml.replace(
-            /<th/g,
-            '<th style="border: 1px solid black; padding: 5px;"'
-          );
-          tableHtml = tableHtml.replace(/<br>/g, '\n');
-          const blob = new Blob([tableHtml], { type: 'application/vnd.ms-word' });
-          FileSaver.saveAs(blob, 'table.doc');
+            let tableHtml = tableElement.outerHTML;
+            tableHtml = tableHtml.replace(
+                /<table/g,
+                '<table style="border-collapse: collapse;"'
+            );
+            tableHtml = tableHtml.replace(
+                /<td/g,
+                '<td style="border: 1px solid black; padding: 5px;"'
+            );
+            tableHtml = tableHtml.replace(
+                /<th/g,
+                '<th style="border: 1px solid black; padding: 5px;"'
+            );
+            tableHtml = tableHtml.replace(/<br>/g, '\n');
+            const blob = new Blob([tableHtml], { type: 'application/vnd.ms-word' });
+            FileSaver.saveAs(blob, 'table.doc');
         } else {
-          this.openErrorDialog('Table element not found');
+            this.openErrorDialog('Table element not found');
         }
-      }
-      
+    }
+
 
     login() {
         this.http
-            .post<{ token: string }>(this.adres + '/login', { username: this.username, password: this.password })
+            .post<{ token: string }>(this.adres + '/login', { username: this.user.username, password: this.user.password, table: this.user.loginTable })
             .subscribe(
                 (res) => {
                     localStorage.setItem('token', res.token);
@@ -138,37 +117,15 @@ export class AppComponent {
                         const decodedToken = jwt_decode<{ user_id: number; isAdmin: boolean }>(this.token);
                         if (decodedToken.isAdmin) {//если зашёл админ
                             this.isAdmin = true;
-                            this.http.get<Result[]>(this.adres + '/results', {
-                                headers: new HttpHeaders({
-                                    Authorization: `Bearer ${this.token}`,
-                                }),
-                            })
-                                .subscribe((data) => {
-                                    this.results = data; //as unknown as GroupedResults;
-                                });
-                            this.http.get<number>(this.adres + '/user-count', {
-                                headers: new HttpHeaders({
-                                    Authorization: `Bearer ${this.token}`,
-                                }),
-                            })
-                                .subscribe((count) => {
-                                    this.userCount = count;
-                                });
-                            this.http.get<string[]>(this.adres + '/users-not-completed', {
-                                headers: new HttpHeaders({
-                                    Authorization: `Bearer ${this.token}`,
-                                }),
-                            })
-                                .subscribe((users) => {
-                                    this.usersNotCompleted = users;
-                                });
-
+                        
+                            
+                            
                         }
 
                         else {
-
+                            console.log(this.user.loginTable + " this.user.loginTable")
                             this.http
-                                .get<Question[]>(this.adres + '/test', {
+                                .post<Question[]>(this.adres + '/checkTest', { userTable: this.user.loginTable }, {
                                     headers: new HttpHeaders({
                                         Authorization: `Bearer ${this.token}`,
                                     }),
@@ -176,21 +133,15 @@ export class AppComponent {
                                 .subscribe((data) => {
                                     this.questions = data;
                                     this.answers = new Array(this.questions.length).fill(undefined);
-                                    // this.message = "Спасибо за ваш ответ"
-                                    // this.token = null;
-                                    // this.questions = [];
-                                    // this.answers = [];
-                                    // // this.results = [];
-                                    // this.username = '';
-                                    // this.password = '';
-
                                 }, (error) => {
                                     this.showSubmitButton = false;
-
                                     if (error.status === 500) {
                                         this.openErrorDialog('Internal server error')
                                     } else if (error.status === 403) {
                                         this.openErrorDialog('Вы уже проходили этот тест, данный тест можно пройти только один раз')
+                                        setTimeout(function () {
+                                            location.reload();
+                                        }, 2000);
                                     } else if (error.status === 401) {
                                         this.openErrorDialog('Вы не авторизованы,те вас нет в базе данных')
                                     } else {
@@ -198,6 +149,9 @@ export class AppComponent {
                                     }
                                 });
                         }
+                    } else {
+                        this.openErrorDialog('Какие-то неполадки, попробуйте еще раз то, что вы делали или обратитесь к админу')
+
                     }
                 },
                 (error) => {
@@ -207,6 +161,9 @@ export class AppComponent {
                         this.openErrorDialog('Internal server error')
                     } else if (error.status === 403) {
                         this.openErrorDialog('Вы уже проходили этот тест, данный тест можно пройти только один раз')
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
                     } else if (error.status === 401) {
                         this.openErrorDialog('Вы не авторизованы,те вас нет в базе данных')
                     } else {
@@ -214,12 +171,49 @@ export class AppComponent {
                     }
                 });
     }
-
+    handleButtonClick() {
+        this.users_no_completed();
+        this.rezult_user();
+        this.users_count();
+    }
+    users_no_completed() {
+        this.http.post<string[]>(this.adres + '/users-not-completed', { userTable: this.users_not_completed }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        })
+            .subscribe((users) => {
+                this.usersNotCompleted = users;
+            });
+    }
+    users_count(){
+        this.http.post<number>(this.adres + '/user-count', { userTable: this.users_not_completed }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        })
+            .subscribe((count) => {
+                this.userCount = count;
+            });
+    }
+    rezult_user(){
+        this.http.post<Result[]>(this.adres + '/results', { userTable: this.users_not_completed }, {
+            headers: new HttpHeaders({
+                Authorization: `Bearer ${this.token}`,
+            }),
+        })
+            .subscribe((data) => {
+                this.results = data; //as unknown as GroupedResults;
+            });
+    }
     onSubmit() {
         this.http
             .post(
                 this.adres + '/test',
-                { answers: this.answers }, {
+                {
+                    answers: this.answers,
+                    userTable: this.user.loginTable
+                }, {
                 headers: new HttpHeaders({
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${this.token}`,
@@ -229,7 +223,7 @@ export class AppComponent {
             .subscribe((data) => {
                 console.log(data);
             });
-        this.openErrorDialog("Спасиба за ваши овтеты")
+        this.openErrorDialog("Спасибо за ваши ответы")
         setTimeout(function () {
             location.reload();
         }, 2000);
@@ -304,7 +298,7 @@ export class AppComponent {
     }
 
     addQuestion() {
-        this.http.post(this.adres + '/add-question', { tableName: this.tableName1, question: this.question, option1: this.option1, option2: this.option2, option3: this.option3, option4: this.option4, option5: this.option5 }, {
+        this.http.post(this.adres + '/add-question', { tableName: this.tableName1, question: this.question.question, option1: this.question.option1, option2: this.question.option2, option3: this.question.option3, option4: this.question.option4, option5: this.question.option5 }, {
             headers: new HttpHeaders({
                 Authorization: `Bearer ${this.token}`,
             }),
@@ -337,7 +331,7 @@ export class AppComponent {
         );
     }
     getAnswers() {
-        this.http.get(this.adres + '/get-ansver?tableName=' + this.tableName2, {
+        this.http.get(this.adres + '/get-ansver?tableName=' + this.get_ansver, {
             headers: new HttpHeaders({
                 Authorization: `Bearer ${this.token}`,
             }),
@@ -392,7 +386,6 @@ export class AppComponent {
     }
 
     createUsers() {
-        // Send a POST request to the /add-user endpoint with the user data
         this.http
             .post(
                 this.adres + '/add-user',

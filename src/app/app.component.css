@@ -1,16 +1,18 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #000000;
+}
+.container {
+  font-family: "Montserrat", sans-serif;
 }
 
 .questionsr form {
-  font-family: Arial, sans-serif;
   margin: 0 auto;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
 }
-
 
 label {
   display: block;
@@ -19,62 +21,107 @@ label {
   cursor: pointer;
 }
 
-.login{
+.login {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: relative;
 }
 
-.message {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 24px;
-  color: #4CAF50;
-  text-align: center;
-  margin: 20px;
+.login::before {
+  content: "";
+  background-image: url("https://p4.wallpaperbetter.com/wallpaper/600/920/856/minimalism-4k-best-ever-wallpaper-preview.jpg");
+  border-radius: 10px;
+  filter: blur(0px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
-.error {
-  color: red;
-  font-weight: bold;
-  font-size: 24px;
-  text-align: center;
+.log {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 form h2 {
   text-align: left;
 }
 
-input [type="radio"]{
+input [type="radio"] {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
+}
+input {
+  font-family: "Montserrat", sans-serif;
+}
+input[type="text"] {
+  background-image: url("https://img.icons8.com/?size=512&id=83190&format=png");
+  background-color: white;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
 }
 input:not([type="radio"]) {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
+  border: 2px solid #cccccc48;
+  border-radius: 10px;
 }
 
 button {
   width: 50%;
+  max-width: 300px;
+  background-color: #bfefff;
+  color: rgb(124, 124, 124);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+}
+
+button:hover {
+  background-color: #425170;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+}
+.button-get-user{
+  display: flex;
+  justify-content: space-between;
+}
+.login button {
+  width: 50%;
   max-width: 150px;
-  background-color: #4CAF50;
+  background-color: #707070;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login button:hover {
+  background-color: #bfc2bf;
+  color: rgb(66, 66, 66);
+  font-family: "Montserrat", sans-serif;
 }
 
 /* ... other styles ... */
 /* styles.css */
-
 
 button[disabled] {
   cursor: not-allowed;
@@ -87,12 +134,6 @@ button[disabled] {
   background-position: center;
 }
 
-button[type="submit"]:hover {
-  background-color: #45a049;
-}
-
-
-
 .table-container {
   width: 80%;
   max-width: 800px;
@@ -100,11 +141,31 @@ button[type="submit"]:hover {
 }
 
 table {
-  font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 100%; 
+  border-spacing: 0;
+  border-radius: 10px; /* одно значение для всех углов */
+}
+.tablicc {
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
+.tablicc th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.tablicc th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.tablicc tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.tablicc tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
 td,
 th {
   border: 1px solid #ddd;
@@ -119,67 +180,100 @@ th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4CAF50;
+  background-color: #5c95ce;
   color: white;
 }
 
 @media (max-width: 600px) {
-
   table,
   th,
   td {
     font-size: 14px;
     padding: 4px;
-    text-align: center
+    text-align: center;
   }
 }
-
-.container {
-  max-width: 50%;
-  margin: auto;
-}
-
-.table-name {
-  background-color: #f0f8ff;
+.users_not_complet {
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-bottom: 20px;
+  background-color: #add8e6;
+  padding: 10px;
+  border-radius: 10px;
+
+}
+.table-name {
+  background-color: #add8e6;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .ChangeUserPassword {
-  background-color: #f5f5dc;
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
 }
 
 .tablesList {
-  background-color: #e6e6fa;
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
 }
 
 .addQuestion {
-  background-color: #fffacd;
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
 }
 
 .createTables {
-  background-color: #f0f8ff;
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
 }
 
 .getQuestions {
-  background-color: #f5f5dc;
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
 }
-
-.updateQuestion {
-  background-color: #e6e6fa;
+.createUsers {
+  background-color: #add8e6;
   padding: 10px;
+  border-radius: 10px;
+}
+.updateQuestion {
+  background-color: #add8e6;
+  padding: 10px;
+  border-radius: 10px;
+}
+.ClearAnsvers {
+  background-color: #add8e6;
+  padding: 10px;
+  border-radius: 10px;
+}
+@media (max-width: 900px) {
+  input[type="text"],
+  input[type="password"] {
+    width: 90%;
+    max-width: 90%;
+  }
+}
+@media (max-width: 700px) {
+  input[type="text"],
+  input[type="password"] {
+    width: 90%;
+    max-width: 90%;
+  }
 }
 
 @media (max-width: 500px) {
-  .container {
-    max-width: 95%;
-    margin: auto;
-  }
-
   .questionsr {
     max-width: 100%;
     width: 100%;
@@ -193,7 +287,6 @@ th {
   }
 
   .questionsr form {
-    font-family: Arial, sans-serif;
     max-width: 100%;
     width: 100%;
     margin: 0 auto;
@@ -205,29 +298,13 @@ th {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 100%
-  }
-
-  button[type="submit"] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    max-width: 100%;
   }
 
   input[type="text"],
   input[type="password"] {
-    width: 100%;
-    max-width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
+    width: 80%;
+    max-width: 95%;
   }
 }
 
@@ -241,44 +318,16 @@ hr {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  color: #4a86e8;
+  color: #000000;
+  font-family: "Montserrat", sans-serif;
   text-shadow: 1px 1px #fff;
 }
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  margin-bottom: 20px;
-  background-color: #33394646;
-  padding: 10px;
-}
+
+
 
 .form-container label {
   font-size: 18px;
   margin-right: 10px;
-}
-
-.form-container input {
-  font-size: 18px;
-  padding: 5px;
-  border-radius: 5px;
-  border: none;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-}
-
-.form-container button {
-  font-size: 18px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.form-container button:hover {
-  background-color: #3E8E41;
 }
 
 ul {
@@ -291,7 +340,6 @@ ul li {
   margin-bottom: 10px;
 }
 
-.createUsers{
-  background-color: #fffacd;
-  padding: 10px;
+.centered-text {
+  text-align: center;
 }

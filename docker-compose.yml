@@ -1,0 +1,12 @@
+version: '3.8'  # Версия Docker Compose
+
+services:
+
+  test_app_front:  # Сервис Node.js, TypeScript и Express
+    container_name: test_app_front
+    build: .  # Собираем образ из текущего каталога (который содержит Dockerfile)
+    ports:
+      - "4200:80"  # Открываем порт 4200 на хосте
+    environment:
+       # Настраиваем переменную окружения для подключения к базе данных PostgreSQL
+      POSTGRESQL_DB_NAME: quizSecond

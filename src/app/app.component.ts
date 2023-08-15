@@ -29,7 +29,7 @@ interface CheckTestCompletedResponse {
 })
 export class AppComponent {
 
-    adres: string = "http://localhost:3000";
+    adres: string = "https://test.kzkvv.me/api";
     user = new User();
     question = new Question();
     answersTable = "";

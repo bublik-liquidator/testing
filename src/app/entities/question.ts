@@ -6,4 +6,6 @@ export class Question {
     option3!: string;
     option4!: string;
     option5!: string;
+    group_id!: number;
+    group_name!:string;
 }

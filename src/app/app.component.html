@@ -2,16 +2,15 @@
     <div *ngIf="!isAdmin" class="log">
         <div class="centered-text">ВАЖНО! Тест можно пройти только один раз</div>
         <form class="login" *ngIf="!token" (ngSubmit)="login()">
-            <input type="text" placeholder="Login" [(ngModel)]="user.username" name="username" />
+            <input type="text" placeholder="Login" [(ngModel)]="user.name" name="name" />
             <input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" />
-            <input type="text" placeholder="Group" [(ngModel)]="user.loginTable" name="loginTable" />
             <button type="submit">Вход</button>
         </form>
 
 
         <div class="table-container" class="questionsr">
 
-            <form *ngIf="token" (ngSubmit)="onSubmit()">
+            <form *ngIf="token">
                 <div *ngFor="let question of questions; let i = index">
                     <h2> {{ i + 1 }}: {{ question.question }}</h2>
                     <label>
@@ -40,33 +39,32 @@
                     </label>
                     <br />
                 </div>
-                <button *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"
-                    [class.not-allowed-icon]="!isFormValid()">
-                    Отправить
-                </button>
+                <button *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"  [class.not-allowed-icon]="!isFormValid()"  (click)="submitAnswers()"  >
+                Отправить
+              </button>
             </form>
         </div>
 
     </div>
 
-    <div class="table-container" *ngIf="token && user.username === 'admin'">
+    <div class="table-container" *ngIf="token && user.name === 'admin'">
         <div class="users_not_complet">
             <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{
                 userCount }}
             </p>
-            <label for="createusername">Таблица:<em>users</em></label>
-            <input type="text" id="createusername" [(ngModel)]="users_not_completed" name="createusername" required><br>
-            <h2>Пользователи, которые не прошли тест из таблицы:{{users}}</h2>
+            <h2>Пользователи, которые не прошли тест из таблицы:users</h2>
             <ul>
-                <li *ngFor="let user of usersNotCompleted">{{ user }}</li>
-            </ul>          
+                <li *ngFor="let user of ArrUsers">{{ user }}</li>
+            </ul>
 
         </div>
         <br>
         <div class="answer">
-            <table class="tablicc">
+            <h2>Results</h2>
+            <table>
                 <tr>
                     <th>Вопрос</th>
+                    <th>Group Name</th>
                     <th>Полностью согласен</th>
                     <th>Скорее согласен</th>
                     <th>Отчасти согласен, отчасти нет</th>
@@ -75,6 +73,7 @@
                 </tr>
                 <tr *ngFor="let result of results">
                     <td>{{ result.question }}</td>
+                    <td>{{ result.group_name }}</td>
                     <td>{{ result.option1_count }}</td>
                     <td>{{ result.option2_count }}</td>
                     <td>{{ result.option3_count }}</td>
@@ -82,52 +81,32 @@
                     <td>{{ result.option5_count }}</td>
                 </tr>
             </table>
-
         </div>
         <div class="button-get-user">
             <button (click)="saveTable()">Save Table</button>
-            <button (click)="handleButtonClick()">Получить инфу по юзерам</button>
         </div> <br>
         <hr>
         <h1 class="title">Получить пользователей из таблицы :<em>users</em></h1>
         <div class="form-container">
-            <label for="table-name">Имя таблицы:</label>
-            <input [(ngModel)]="tableName" name="tableName" />
-            <button (click)="getUsers(tableName)">Получить</button>
             <ul>
-                <li *ngFor="let user of users">{{ user.username }}</li>
+                <li *ngFor="let user of users">{{ user.name }}</li>
             </ul>
-        </div>
-        <hr>
-
-        <h1 class="title">Это список всех доступных таблиц</h1>
-        <div class="tablesList">
-            <h2>Список таблиц</h2>
-            <ul>
-                <li *ngFor="let table of tables">{{ table }}</li>
-            </ul>
-            <button (click)="GetTables()">Получить таблицы</button>
-
         </div>
         <hr>
 
         <h1 class="title">Изменить пароль юзеру в таблице:<em>users</em></h1>
         <div class="ChangeUserPassword">
-            <form (ngSubmit)="changePassword()" #changePasswordForm="ngForm">
+            <form>
                 <div>
-                    <label for="tableName_change_password">Имя таблице в которой хранится юзер:</label>
-                    <input type="text" id="createtableName" [(ngModel)]="tableName_change_password"
-                        name="tableName_change_password" required>
-                </div>
-                <div>
-                    <label for="createusername">Username:</label>
-                    <input type="text" id="createusername" [(ngModel)]="createusername" name="createusername" required>
+                    <label for="createname">name:</label>
+                    <input type="text" id="createname" [(ngModel)]="createname" name="createname" required>
                 </div>
                 <div>
                     <label for="new-password">Новый Password:</label>
                     <input type="text" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required>
                 </div>
-                <button type="submit">Изменить</button>
+                <button (click)="changePassword()">Click me!</button>
+
             </form>
         </div>
         <hr>
@@ -136,145 +115,132 @@
         <div class="addQuestion">
             <form (submit)="addQuestion()">
                 <div>
-                    <label for="tableName">Имя таблицы:</label>
-                    <input type="text" id="tableName" [(ngModel)]="tableName1" name="tableName">
+                    <label for="question.group_id">group_id те id группы в которой сушесвует юзер:</label>
+                    <input type="text" id="question.group_id" [(ngModel)]="CreateQuestion.group_id" name="group_id">
                 </div>
                 <div>
                     <label for="question">Вопрос:</label>
-                    <input type="text" id="question" [(ngModel)]="question.question" name="question">
+                    <input type="text" id="question" [(ngModel)]="CreateQuestion.question" name="question">
                 </div>
                 <div>
                     <label for="option1">Вариант ответа 1:</label>
-                    <input type="text" id="question.option1" [(ngModel)]="question.option1" name="option1">
+                    <input type="text" id="question.option1" [(ngModel)]="CreateQuestion.option1" name="option1">
                 </div>
                 <div>
                     <label for="option2">Вариант ответа 2:</label>
-                    <input type="text" id="question.option2" [(ngModel)]="question.option2" name="option2">
+                    <input type="text" id="question.option2" [(ngModel)]="CreateQuestion.option2" name="option2">
                 </div>
                 <div>
                     <label for="option3">Вариант ответа 3:</label>
-                    <input type="text" id="question.option3" [(ngModel)]="question.option3" name="option3">
+                    <input type="text" id="question.option3" [(ngModel)]="CreateQuestion.option3" name="option3">
                 </div>
                 <div>
                     <label for="option4">Вариант ответа 4:</label>
-                    <input type="text" id="question.option4" [(ngModel)]="question.option4" name="option4">
+                    <input type="text" id="question.option4" [(ngModel)]="CreateQuestion.option4" name="option4">
                 </div>
                 <div>
                     <label for="option5">Вариант ответа 5:</label>
-                    <input type="text" id="question.option5" [(ngModel)]="question.option5" name="option5">
+                    <input type="text" id="question.option5" [(ngModel)]="CreateQuestion.option5" name="option5">
                 </div>
                 <button type="submit">Добавить вопрос</button>
             </form>
         </div>
         <hr>
 
-
-        <h1 class="title">Создать новую таблицу(ы):<em>questions answers users</em></h1>
-        <div class="createTables">
-            <form (ngSubmit)="createTables()" #createTablesForm="ngForm">
-                <label for="NewtableName">Имя таблицы с вопросами и ответами на них: <em>questions</em></label>
-                <input type="text" id="NewtableName" [(ngModel)]="NewtableName" name="NewtableName">
-                <label for="answersName">Имя таблицы где будут храниться ответы юзеров: <em>answers</em></label>
-                <input type="text" id="answersName" [(ngModel)]="answersName" name="answersName">
-                <label for="users_create_tables">Имя таблицы с юзерами: <em>users</em></label>
-                <input type="text" id="users_create_tables" [(ngModel)]="users_create_tables"
-                    name="users_create_tables">
-                <br>
-                <button type="submit">Создать таблицы</button>
-            </form>
-        </div>
-
-        <h1 class="title">Получить ID вопроса в указанной таблице с вопросами :<em>questions</em></h1>
+        <h1 class="title">Получить ID вопроса в таблице с вопросами :<em></em></h1>
         <div class="getQuestions">
-            <form (submit)="getQuestions()">
-                <label for="tableName">Имя таблицы в которой лежит вопрос:</label>
-                <input type="text" id="tableName" [(ngModel)]="tableName2" name="tableName">
-                <div *ngIf="questions">
-                    <h2>Вопрос</h2>
-                    <ul>
-                        <li *ngFor="let question of Squestions">
-                            ID:<strong>{{ question.id }}</strong> -{{ question.question }}
-                        </li>
-                    </ul>
-                </div>
-                <button type="submit">Получить список вопросов</button>
-            </form>
+            <ul>
+                <li *ngFor="let question of questions">
+                  id вопроса: {{ question.id }} сам вопрос: {{ question.question }} имя группы: {{ question.group_name }}
+                </li>
+              </ul>
+            <button (click)="getQuestions()">Получить список вопросов</button>
         </div>
         <hr>
 
         <h1 class="title">Обновить вопрос и ответы на него</h1>
         <div class="updateQuestion">
-            <form (submit)="updateQuestion()">
-                <label for="tableName">Введите имя таблицы в которой лежит ваш вопрос: <em>questions</em></label>
-                <input type="text" id="tableName" [(ngModel)]="tableName2" name="tableName">
-                <label for="questionId">Введите ID вопроса:</label>
-                <input type="number" id="questionId" [(ngModel)]="questionId" name="questionId">
-                <br>Чтобы получить ID вопроса см пункт Получить ID вопроса в указанной таблице с вопросами он выше<br>
-                <label for="question">Новый текст вопроса:</label>
-                <input type="text" id="question" [(ngModel)]="question" name="question">
-                <label for="updateoption1">Вариант ответа 1:</label>
-                <input type="text" id="updateoption1" [(ngModel)]="updateoption1" name="updateoption1">
-                <label for="updateoption2">Вариант ответа 2:</label>
-                <input type="text" id="updateoption2" [(ngModel)]="updateoption2" name="updateoption2">
-                <label for="updateoption3">Вариант ответа 3:</label>
-                <input type="text" id="updateoption3" [(ngModel)]="updateoption3" name="updateoption3">
-                <label for="updateoption4">Вариант ответа 4:</label>
-                <input type="text" id="updateoption4" [(ngModel)]="updateoption4" name="updateoption4">
-                <label for="updateoption5">Вариант ответа 5:</label>
-                <input type="text" id="updateoption5" [(ngModel)]="updateoption5" name="updateoption5">
-                <br>
+            <form (ngSubmit)="updateQuestion()">
+                <div>
+                    <label for="questionId">Question ID:</label>
+                    <input type="number" id="questionId" [(ngModel)]="UpdateQuestion.id" name="questionId" />
+                </div>
+                <div>
+                    <label for="question">Вопрос:</label>
+                    <input type="text" id="question" [(ngModel)]="UpdateQuestion.question" name="question" />
+                </div>
+                <div>
+                    <label for="option1">Вариант ответа 1:</label>
+                    <input type="text" id="option1" [(ngModel)]="UpdateQuestion.option1" name="option1" />
+                </div>
+                <div>
+                    <label for="option2">Вариант ответа 2:</label>
+                    <input type="text" id="option2" [(ngModel)]="UpdateQuestion.option2" name="option2" />
+                </div>
+                <div>
+                    <label for="option3">Вариант ответа 3:</label>
+                    <input type="text" id="option3" [(ngModel)]="UpdateQuestion.option3" name="option3" />
+                </div>
+                <div>
+                    <label for="option4">Вариант ответа 4:</label>
+                    <input type="text" id="option4" [(ngModel)]="UpdateQuestion.option4" name="option4" />
+                </div>
+                <div>
+                    <label for="option5">Вариант ответа 5:</label>
+                    <input type="text" id="option5" [(ngModel)]="UpdateQuestion.option5" name="option5" />
+                </div>
+                <div>
+                    <label for="group_id">Group ID:</label>
+                    <input type="number" id="group_id" [(ngModel)]="UpdateQuestion.group_id" name="group_id" />
+                </div>
                 <button type="submit">Обновить вопрос</button>
             </form>
         </div>
         <hr>
-        <h1 class="title">Создать нового юзера в указанной таблице : <em>users</em></h1>
+        <h1 class="title">Создать нового юзера в users: </h1>
         <div class="createUsers">
-            <form (ngSubmit)="createUsers()">
-                <label for="createtableName">Имя таблицы куда добавить юзера:<em>users</em></label>
-                <input type="text" id="createtableName" [(ngModel)]="createtableName" name="createtableName" required>
-
-                <label for="createusername">Username:</label>
-                <input type="text" id="createusername" [(ngModel)]="createusername" name="createusername" required>
-
-                <label for="createpassword">Password:</label>
-                <input type="createpassword" id="createpassword" [(ngModel)]="createpassword" name="createpassword"
-                    required>
-
-                <label for="createrole">Role:<em>по умолчанию ставь всем user</em></label>
-                <input type="text" id="role" [(ngModel)]="createrole" name="createrole" required>
-                <br>
-                <button type="submit">Добавить</button>
+            <form (ngSubmit)="addUser()">
+                <div>
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" [(ngModel)]="CreatUser.name" name="name" />
+                </div>
+                <div>
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" [(ngModel)]="CreatUser.password" name="password" />
+                </div>
+                <div>
+                    <label for="group_id">Group ID:</label>
+                    <input type="number" id="group_id" [(ngModel)]="CreatUser.group_id" name="group_id" />
+                </div>
+                <div>
+                    <label for="role">Роль:</label>
+                    <input type="text" id="role" [(ngModel)]="CreatUser.role" name="role" />
+                </div>
+                <button type="submit">Добавить юзерв</button>
             </form>
         </div>
         <hr>
 
         <h1 class="title">Получить иформацию по таблиwе где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
         <div class="getQuestions">
-            <form (submit)="getAnswers()">
-                <label for="tableName">Имя таблицы в которой лежит вопрос:</label>
-                <input type="text" id="tableName" [(ngModel)]="get_ansver" name="tableName">
+            <form>
                 <div *ngIf="questions">
                     <h2>Вопрос</h2>
                     <ul>
                         <li *ngFor="let answer of Ansswers">
-                            ID:<strong>{{ answer.id }}</strong> -{{ answer.user_id }} -- {{ answer.question_id }}
+                            это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера {{ answer.user_id }} -- это имя
+                            группы {{ answer.group_name }}
                         </li>
                     </ul>
                 </div>
-                <button type="submit">Получить иформацию</button>
+                <button (click)="getAnswers()">Получить иформацию</button>
             </form>
         </div>
         <hr>
 
-        <h1 class="title">Очистить ответы юзеров в таблице(answers):<em>ansvers</em></h1>
+        <h1 class="title">ВАЖНО ПРОСТО ТАК НЕ ТЫКАТЬ Очистить ответы юзеров в таблице(answers):<em>answers</em></h1>
         <div class="ClearAnsvers">
-            <form #clearTableForm="ngForm" (ngSubmit)="Clear(clearTableForm)">
-                <div>
-                    <label for="tableNameClear">Table Name:</label>
-                    <input type="text" id="tableNameClear" name="tableNameClear" ngModel required>
-                </div>
-                <button type="submit">Clear Table</button>
-            </form>
+            <button (click)="ClearAnswers()">Очистить ТО ЧТО ВЫБРАЛИ ВСЕ ЮЗЕРЫ</button>
         </div>
     </div>
 

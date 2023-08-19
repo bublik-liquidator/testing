@@ -39,9 +39,10 @@
                     </label>
                     <br />
                 </div>
-                <button *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"  [class.not-allowed-icon]="!isFormValid()"  (click)="submitAnswers()"  >
-                Отправить
-              </button>
+                <button *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"
+                    [class.not-allowed-icon]="!isFormValid()" (click)="submitAnswers()">
+                    Отправить
+                </button>
             </form>
         </div>
 
@@ -60,36 +61,42 @@
         </div>
         <br>
         <div class="answer">
-            <h2>Results</h2>
-            <table>
+            <h2>Результаты</h2>
+            <table class="tablicc">
                 <tr>
                     <th>Вопрос</th>
-                    <th>Group Name</th>
+                    <th>Группа</th>
                     <th>Полностью согласен</th>
                     <th>Скорее согласен</th>
                     <th>Отчасти согласен, отчасти нет</th>
                     <th>Полностью не согласен</th>
                     <th>Затрудняюсь ответить, не могу оценить</th>
                 </tr>
-                <tr *ngFor="let result of results">
+                <tr *ngFor="let result of Results">
                     <td>{{ result.question }}</td>
                     <td>{{ result.group_name }}</td>
                     <td>{{ result.option1_count }}</td>
                     <td>{{ result.option2_count }}</td>
                     <td>{{ result.option3_count }}</td>
                     <td>{{ result.option4_count }}</td>
-                    <td>{{ result.option5_count }}</td>
+                    <td>{{ result.option5_count}}</td>
                 </tr>
             </table>
         </div>
         <div class="button-get-user">
-            <button (click)="saveTable()">Save Table</button>
-        </div> <br>
+            <button (click)="saveTable()">Сохранить таблицу</button>
+            <button (click)="getResults()">Поулчить информацю</button>
+        </div>
+        <br>
+        <label for="date">Дата:</label>
+        <input type="date" id="date" name="date">
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description"></textarea>
         <hr>
         <h1 class="title">Получить пользователей из таблицы :<em>users</em></h1>
         <div class="form-container">
             <ul>
-                <li *ngFor="let user of users">{{ user.name }}</li>
+                <li *ngFor="let user of users"> имя юзера - <strong>{{ user.name }}</strong> || group_id юзера - <strong>{{ user.group_id }}</strong></li>
             </ul>
         </div>
         <hr>
@@ -99,13 +106,17 @@
             <form>
                 <div>
                     <label for="createname">name:</label>
-                    <input type="text" id="createname" [(ngModel)]="createname" name="createname" required>
+                    <input type="text" id="createname" [(ngModel)]="UpdateUser.name" name="update_name" required>
                 </div>
                 <div>
                     <label for="new-password">Новый Password:</label>
-                    <input type="text" id="newPassword" [(ngModel)]="newPassword" name="newPassword" required>
+                    <input type="text" id="newPassword" [(ngModel)]="UpdateUser.password" name="update_password" required>
                 </div>
-                <button (click)="changePassword()">Click me!</button>
+                <div>
+                    <label for="new-group_id">Новый group_id:</label>
+                    <input type="text" id="group_id" [(ngModel)]="UpdateUser.group_id" name="update_group_id" required>
+                </div>
+                <button (click)="changePassword()">Изменить пароль</button>
 
             </form>
         </div>
@@ -151,9 +162,9 @@
         <div class="getQuestions">
             <ul>
                 <li *ngFor="let question of questions">
-                  id вопроса: {{ question.id }} сам вопрос: {{ question.question }} имя группы: {{ question.group_name }}
+                    id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question }}</strong> имя группы: <strong>{{ question.group_name}}</strong>
                 </li>
-              </ul>
+            </ul>
             <button (click)="getQuestions()">Получить список вопросов</button>
         </div>
         <hr>
@@ -228,8 +239,8 @@
                     <h2>Вопрос</h2>
                     <ul>
                         <li *ngFor="let answer of Ansswers">
-                            это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера {{ answer.user_id }} -- это имя
-                            группы {{ answer.group_name }}
+                            это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{ answer.user_id }}</strong> -- это имя
+                            группы <strong>{{ answer.group_name }}</strong>
                         </li>
                     </ul>
                 </div>

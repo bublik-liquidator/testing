@@ -3,5 +3,6 @@ export class Answer {
     user_id!: number;
     question_id!: number;
     answer!: string;
-    group_id!: number;   
+    group_id!: number;
+    group_name!:string;   
 }

@@ -21,6 +21,17 @@ label {
   cursor: pointer;
 }
 
+input[type="date"], textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5em;
+  font-size: 1.2em;
+}
+
+textarea {
+  height: 5em;
+}
+
 .login {
   display: flex;
   flex-direction: column;

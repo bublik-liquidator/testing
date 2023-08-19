@@ -28,7 +28,7 @@ export class AppComponent {
     //Ansswers: Answer[]=[]
     Ansswers: any;
 
-    adres: string = "http://localhost:3000";
+    adres: string = "https://test.kzkvv.me/api";
     user = new User();
     users: User[] = [];
 

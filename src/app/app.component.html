@@ -205,12 +205,21 @@
 
         <h1 class="title">Получить ID вопроса в таблице с вопросами :<em></em></h1>
         <div class="getQuestions">
-            <ul>
-                <li *ngFor="let question of questions">
-                    id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question }}</strong>
-                    имя группы: <strong>{{ question.group_name}}</strong>
-                </li>
-            </ul>
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Все вопросы
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul>
+                    <li *ngFor="let question of questions">
+                        id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question }}</strong>
+                        имя группы: <strong>{{ question.group_name}}</strong>
+                    </li>
+                </ul>
+                </mat-expansion-panel>
+              </mat-accordion>           
             <button (click)="getQuestions()">Получить список вопросов</button>
         </div>
         <hr>
@@ -260,14 +269,22 @@
         <div class="getQuestions">
             <form>
                 <div *ngIf="questions">
-                    <h2>Вопрос</h2>
-                    <ul>
+                <mat-accordion>
+                    <mat-expansion-panel hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h2>Вопрос</h2>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <ul>
                         <li *ngFor="let answer of Ansswers">
                             это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{ answer.user_id
                                 }}</strong> -- это имя
                             группы <strong>{{ answer.group_name }}</strong>
                         </li>
                     </ul>
+                    </mat-expansion-panel>
+                  </mat-accordion>                      
                 </div>
                 <button (click)="getAnswers()">Получить иформацию</button>
             </form>

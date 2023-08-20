@@ -1,10 +1,11 @@
+
 body {
   margin: 0;
   padding: 0;
   background-color: #000000;
 }
 .container {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif!important;
 }
 
 .questionsr form {
@@ -353,4 +354,51 @@ ul li {
 
 .centered-text {
   text-align: center;
+}
+
+select#group_id {
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  padding: 12px 20px;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+}
+
+/* ---------------------------------Matereral---------------------- */
+/* :host ::ng-deep .mat-expansion {
+  font-family: "Montserrat", sans-serif!important;
+}
+:host ::ng-deep .mat-expansion-panel {
+  font-family: "Montserrat", sans-serif!important;
+} */
+
+/* .mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description,
+.mat-expansion-panel-content,
+.mat-typography,
+.mat-expansion-panel-body,
+.mat-expansion-panel-header,
+.mat-accordion,
+.mat-expansion-panel,
+.mat-panel-title,
+.mat-expansion-panel-content  {
+  font-family: "Montserrat", sans-serif !important;
+}
+.mat-expansion-panel{
+  font-family: "Montserrat", sans-serif !important;
+} */
+:host ::ng-deep mat-accordion,
+:host ::ng-deep mat-expansion-panel,
+:host ::ng-deep mat-panel-title,
+:host ::ng-deep mat-expansion-panel-header,
+:host ::ng-deep ul{
+  font-family: "Montserrat", sans-serif!important;
+  font-size: 16px;
+
+}
+.form-container {
+  font-family: "Montserrat", sans-serif!important;
+  font-size: 16px;
+
 }

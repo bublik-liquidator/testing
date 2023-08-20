@@ -53,11 +53,18 @@
             <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{
                 userCount }}
             </p>
-            <h2>Пользователи, которые не прошли тест из таблицы:users</h2>
-            <ul>
-                <li *ngFor="let user of ArrUsers">{{ user }}</li>
-            </ul>
-
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Пользователи, которые не прошли тест из таблицы:users
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul>
+                    <li *ngFor="let user of ArrUsers">{{ user }}</li>
+                  </ul>
+                </mat-expansion-panel>
+              </mat-accordion>
         </div>
         <br>
         <div class="answer">
@@ -93,12 +100,25 @@
         <label for="description">Описание:</label>
         <textarea id="description" name="description"></textarea>
         <hr>
+
         <h1 class="title">Получить пользователей из таблицы :<em>users</em></h1>
         <div class="form-container">
-            <ul>
-                <li *ngFor="let user of users"> имя юзера - <strong>{{ user.name }}</strong> || group_id юзера - <strong>{{ user.group_id }}</strong></li>
-            </ul>
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Это все юзеры которые есть вообще
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ul>
+                    <li *ngFor="let user of users"> имя юзера - <strong>{{ user.name }}</strong> || group_id юзера -
+                      <strong>{{ user.group_id }}</strong>
+                    </li>
+                  </ul>
+                </mat-expansion-panel>
+              </mat-accordion>
         </div>
+        <button (click)="GetUsersFromTable()">Получить юзеров</button>
         <hr>
 
         <h1 class="title">Изменить пароль юзеру в таблице:<em>users</em></h1>
@@ -110,18 +130,43 @@
                 </div>
                 <div>
                     <label for="new-password">Новый Password:</label>
-                    <input type="text" id="newPassword" [(ngModel)]="UpdateUser.password" name="update_password" required>
+                    <input type="text" id="newPassword" [(ngModel)]="UpdateUser.password" name="update_password"
+                        required>
                 </div>
                 <div>
                     <label for="new-group_id">Новый group_id:</label>
-                    <input type="text" id="group_id" [(ngModel)]="UpdateUser.group_id" name="update_group_id" required>
+                    <select id="group_id" [(ngModel)]="groups_name" name="groups_name" required>
+                        <option *ngFor="let group of group_id" [value]="group.name">{{ group.name }}</option>
+                    </select>
                 </div>
                 <button (click)="changePassword()">Изменить пароль</button>
 
             </form>
         </div>
         <hr>
-
+        <h1 class="title">Создать нового юзера в users: </h1>
+        <div class="createUsers">
+            <form (ngSubmit)="addUser()">
+                <div>
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" [(ngModel)]="CreatUser.name" name="name" />
+                </div>
+                <div>
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" [(ngModel)]="CreatUser.password" name="password" />
+                </div>
+                <div>
+                    <label for="group_id">Group ID:</label>
+                    <input type="number" id="group_id" [(ngModel)]="CreatUser.group_id" name="group_id" />
+                </div>
+                <div>
+                    <label for="role">Роль:</label>
+                    <input type="text" id="role" [(ngModel)]="CreatUser.role" name="role" />
+                </div>
+                <button type="submit">Добавить юзерв</button>
+            </form>
+        </div>
+        <hr>
         <h1 class="title">Добавить новый вопрос в указанную таблицу :<em>questions</em></h1>
         <div class="addQuestion">
             <form (submit)="addQuestion()">
@@ -162,7 +207,8 @@
         <div class="getQuestions">
             <ul>
                 <li *ngFor="let question of questions">
-                    id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question }}</strong> имя группы: <strong>{{ question.group_name}}</strong>
+                    id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question }}</strong>
+                    имя группы: <strong>{{ question.group_name}}</strong>
                 </li>
             </ul>
             <button (click)="getQuestions()">Получить список вопросов</button>
@@ -208,29 +254,7 @@
             </form>
         </div>
         <hr>
-        <h1 class="title">Создать нового юзера в users: </h1>
-        <div class="createUsers">
-            <form (ngSubmit)="addUser()">
-                <div>
-                    <label for="name">Имя:</label>
-                    <input type="text" id="name" [(ngModel)]="CreatUser.name" name="name" />
-                </div>
-                <div>
-                    <label for="password">Пароль:</label>
-                    <input type="password" id="password" [(ngModel)]="CreatUser.password" name="password" />
-                </div>
-                <div>
-                    <label for="group_id">Group ID:</label>
-                    <input type="number" id="group_id" [(ngModel)]="CreatUser.group_id" name="group_id" />
-                </div>
-                <div>
-                    <label for="role">Роль:</label>
-                    <input type="text" id="role" [(ngModel)]="CreatUser.role" name="role" />
-                </div>
-                <button type="submit">Добавить юзерв</button>
-            </form>
-        </div>
-        <hr>
+
 
         <h1 class="title">Получить иформацию по таблиwе где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
         <div class="getQuestions">
@@ -239,7 +263,8 @@
                     <h2>Вопрос</h2>
                     <ul>
                         <li *ngFor="let answer of Ansswers">
-                            это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{ answer.user_id }}</strong> -- это имя
+                            это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{ answer.user_id
+                                }}</strong> -- это имя
                             группы <strong>{{ answer.group_name }}</strong>
                         </li>
                     </ul>

@@ -19,7 +19,8 @@ import { Result } from './entities/result ';
 export class AppComponent {
     CreatUser = new User();
     UpdateUser = new User();
-
+    group_id:any[] = [];
+    groups_name:any;
     UpdateQuestion = new Question();
     CreateQuestion = new Question();
     Results: Result[] = [];
@@ -28,7 +29,7 @@ export class AppComponent {
     //Ansswers: Answer[]=[]
     Ansswers: any;
 
-    adres: string = "https://test.kzkvv.me/api";
+    adres: string = "http://localhost:3000";
     user = new User();
     users: User[] = [];
 
@@ -132,20 +133,29 @@ export class AppComponent {
                                         console.error( err );
                                         this.openErrorDialog( "Не успешно " + err.message );
                                     } );
-                            this.http.post<User[]>( this.adres + '/users', {}, {
-                                headers: new HttpHeaders( {
-                                    Authorization: `Bearer ${ this.token }`,
-                                } ),
-                            } )
-                                .subscribe(
-                                    ( data ) => {
-                                        this.users = data;
-                                    },
-                                    ( err ) => {
-                                        console.error( err );
-                                        this.openErrorDialog( "Не успешно " + err );
-                                    }
-                                );
+                            // this.http.post<User[]>( this.adres + '/users', {}, {
+                            //     headers: new HttpHeaders( {
+                            //         Authorization: `Bearer ${ this.token }`,
+                            //     } ),
+                            // } )
+                            //     .subscribe(
+                            //         ( data ) => {
+                            //             this.users = data;
+                            //         },
+                            //         ( err ) => {
+                            //             console.error( err );
+                            //             this.openErrorDialog( "Не успешно " + err );
+                            //         }
+                            //     );
+                            this.http.post<string[]>( this.adres + '/users_group_id', {}, {
+                                    headers: new HttpHeaders( {
+                                        Authorization: `Bearer ${ this.token }`,
+                                    } ),
+                                } )
+                                    .subscribe( ( data: any ) => {
+                                        console.log( data + 'data ' );
+                                        this.group_id = data;
+                                    } ); 
                         }
                         else {
                             this.http.post<Question[]>( this.adres + '/checkTest', {}, {
@@ -161,7 +171,6 @@ export class AppComponent {
                                     this.showSubmitButton = false;
                                     this.openErrorDialog( "Ошибка " + error.error )
                                 } );
-
                         }
                     } else {
                         this.openErrorDialog( 'Какие-то неполадки, попробуйте еще раз то, что вы делали или обратитесь к админу' )
@@ -172,6 +181,33 @@ export class AppComponent {
                 } );
     }
 
+    // GetUsersFromTable() {
+    //     this.http.post<string[]>( this.adres + '/users_group_id', {}, {
+    //     headers: new HttpHeaders( {
+    //         Authorization: `Bearer ${ this.token }`,
+    //     } ),
+    // } )
+    //     .subscribe( ( data ) => {
+    //         console.log( data + 'data ' );
+    //         this.group_id = data;
+    //     } ); 
+    // }
+    GetUsersFromTable(){
+        this.http.post<User[]>( this.adres + '/users', {}, {
+            headers: new HttpHeaders( {
+                Authorization: `Bearer ${ this.token }`,
+            } ),
+        } )
+            .subscribe(
+                ( data ) => {
+                    this.users = data;
+                },
+                ( err ) => {
+                    console.error( err );
+                    this.openErrorDialog( "Не успешно " + err );
+                }
+            );
+    }
     getResults() {
         if ( this.token )
             this.http.post<Result[]>( this.adres + '/results', {}, {
@@ -214,8 +250,9 @@ export class AppComponent {
     }
 
     changePassword() {
+        console.log(this.groups_name+"groups_name")
         if ( this.token )
-            this.http.post<{ message: string }>( this.adres + '/change-password', { name: this.UpdateUser.name, newPassword: this.UpdateUser.password, group_id: this.UpdateUser.group_id }, {
+            this.http.post<{ message: string }>( this.adres + '/change-password', { name: this.UpdateUser.name, newPassword: this.UpdateUser.password, groups_name: this.groups_name }, {
                 headers: new HttpHeaders( {
                     Authorization: `Bearer ${ this.token }`,
                 } ),

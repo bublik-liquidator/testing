@@ -29,7 +29,7 @@ export class AppComponent {
     //Ansswers: Answer[]=[]
     Ansswers: any;
 
-    adres: string = "http://localhost:3000";
+    adres: string = " https://test.kzkvv.me/api";
     user = new User();
     users: User[] = [];
 
@@ -133,20 +133,20 @@ export class AppComponent {
                                         console.error( err );
                                         this.openErrorDialog( "Не успешно " + err.message );
                                     } );
-                            // this.http.post<User[]>( this.adres + '/users', {}, {
-                            //     headers: new HttpHeaders( {
-                            //         Authorization: `Bearer ${ this.token }`,
-                            //     } ),
-                            // } )
-                            //     .subscribe(
-                            //         ( data ) => {
-                            //             this.users = data;
-                            //         },
-                            //         ( err ) => {
-                            //             console.error( err );
-                            //             this.openErrorDialog( "Не успешно " + err );
-                            //         }
-                            //     );
+                            this.http.post<User[]>( this.adres + '/users', {}, {
+                                headers: new HttpHeaders( {
+                                    Authorization: `Bearer ${ this.token }`,
+                                } ),
+                            } )
+                                .subscribe(
+                                    ( data ) => {
+                                        this.users = data;
+                                    },
+                                    ( err ) => {
+                                        console.error( err );
+                                        this.openErrorDialog( "Не успешно " + err );
+                                    }
+                                );
                             this.http.post<string[]>( this.adres + '/users_group_id', {}, {
                                     headers: new HttpHeaders( {
                                         Authorization: `Bearer ${ this.token }`,

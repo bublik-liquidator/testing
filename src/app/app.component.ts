@@ -29,7 +29,7 @@ export class AppComponent {
     //Ansswers: Answer[]=[]
     Ansswers: any;
 
-    adres: string = " https://test.kzkvv.me/api";
+    adres: string = "https://test.kzkvv.me/api";
     user = new User();
     users: User[] = [];
 
@@ -197,6 +197,7 @@ export class AppComponent {
             headers: new HttpHeaders( {
                 Authorization: `Bearer ${ this.token }`,
             } ),
+            
         } )
             .subscribe(
                 ( data ) => {

@@ -94,6 +94,40 @@ export class AppComponent {
         return this.answers.every( ( answer ) => answer !== undefined );
     }
 
+    UpdateAllInfo(){
+        this.GetUsersFromTable();
+        this.getResults();
+        this.getQuestions()
+        this.getAnswers()
+        this.http.post<string[]>( this.adres + '/users-not-completed', {}, {
+            headers: new HttpHeaders( {
+                Authorization: `Bearer ${ this.token }`,
+            } ),
+        } )
+            .subscribe( ( users ) => {
+                console.log( users + 'users ' );
+                this.ArrUsers = users;
+            } );
+        this.http.post<number>( this.adres + '/user-count', {}, {
+            headers: new HttpHeaders( {
+                Authorization: `Bearer ${ this.token }`,
+            } ),
+        } )
+            .subscribe( ( count ) => {
+                this.userCount = count;
+            } );
+        
+        this.http.post<string[]>( this.adres + '/users_group_id', {}, {
+                headers: new HttpHeaders( {
+                    Authorization: `Bearer ${ this.token }`,
+                } ),
+            } )
+                .subscribe( ( data: any ) => {
+                    console.log( data + 'data ' );
+                    this.group_id = data;
+                } ); 
+    }
+
     login() {
         this.http.post<{ token: string }>( this.adres + '/login', { name: this.user.name, password: this.user.password } )
             .subscribe(

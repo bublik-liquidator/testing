@@ -53,18 +53,21 @@
             <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{
                 userCount }}
             </p>
+
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Пользователи, которые не прошли тест из таблицы:users
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul>
-                    <li *ngFor="let user of ArrUsers">{{ user }}</li>
-                  </ul>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Пользователи, которые не прошли тест из таблицы:users
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li *ngFor="let user of ArrUsers">{{ user }}</li>
+                    </ul>
                 </mat-expansion-panel>
-              </mat-accordion>
+            </mat-accordion>
+            <button (click)="UpdateAllInfo()">Обновить все данные на странице</button>
+
         </div>
         <br>
         <div class="answer">
@@ -92,7 +95,7 @@
         </div>
         <div class="button-get-user">
             <button (click)="saveTable()">Сохранить таблицу</button>
-            <button (click)="getResults()">Поулчить информацю</button>
+            <button (click)="getResults()">Получить информацию</button>
         </div>
         <br>
         <label for="date">Дата:</label>
@@ -105,18 +108,18 @@
         <div class="form-container">
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Это все юзеры которые есть вообще
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul>
-                    <li *ngFor="let user of users"> имя юзера - <strong>{{ user.name }}</strong> || group_id юзера -
-                      <strong>{{ user.group_id }}</strong>
-                    </li>
-                  </ul>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Это все юзеры которые есть вообще
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li *ngFor="let user of users"> имя юзера - <strong>{{ user.name }}</strong> || group_id юзера -
+                            <strong>{{ user.group_id }}</strong>
+                        </li>
+                    </ul>
                 </mat-expansion-panel>
-              </mat-accordion>
+            </mat-accordion>
         </div>
         <button (click)="GetUsersFromTable()">Получить юзеров</button>
         <hr>
@@ -163,7 +166,7 @@
                     <label for="role">Роль:</label>
                     <input type="text" id="role" [(ngModel)]="CreatUser.role" name="role" />
                 </div>
-                <button type="submit">Добавить юзерв</button>
+                <button type="submit">Добавить юзера</button>
             </form>
         </div>
         <hr>
@@ -171,7 +174,7 @@
         <div class="addQuestion">
             <form (submit)="addQuestion()">
                 <div>
-                    <label for="question.group_id">group_id те id группы в которой сушесвует юзер:</label>
+                    <label for="question.group_id">group_id те id группы в которой существует юзер:</label>
                     <input type="text" id="question.group_id" [(ngModel)]="CreateQuestion.group_id" name="group_id">
                 </div>
                 <div>
@@ -207,19 +210,20 @@
         <div class="getQuestions">
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Все вопросы
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ul>
-                    <li *ngFor="let question of questions">
-                        id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question }}</strong>
-                        имя группы: <strong>{{ question.group_name}}</strong>
-                    </li>
-                </ul>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Все вопросы
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li *ngFor="let question of questions">
+                            id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question
+                                }}</strong>
+                            имя группы: <strong>{{ question.group_name}}</strong>
+                        </li>
+                    </ul>
                 </mat-expansion-panel>
-              </mat-accordion>           
+            </mat-accordion>
             <button (click)="getQuestions()">Получить список вопросов</button>
         </div>
         <hr>
@@ -265,26 +269,27 @@
         <hr>
 
 
-        <h1 class="title">Получить иформацию по таблиwе где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
+        <h1 class="title">Получить иформацию по таблице где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
         <div class="getQuestions">
             <form>
                 <div *ngIf="questions">
-                <mat-accordion>
-                    <mat-expansion-panel hideToggle>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <h2>Вопрос</h2>
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <ul>
-                        <li *ngFor="let answer of Ansswers">
-                            это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{ answer.user_id
-                                }}</strong> -- это имя
-                            группы <strong>{{ answer.group_name }}</strong>
-                        </li>
-                    </ul>
-                    </mat-expansion-panel>
-                  </mat-accordion>                      
+                    <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h2>Вопрос</h2>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li *ngFor="let answer of Ansswers">
+                                    это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{
+                                        answer.user_id
+                                        }}</strong> -- это имя
+                                    группы <strong>{{ answer.group_name }}</strong>
+                                </li>
+                            </ul>
+                        </mat-expansion-panel>
+                    </mat-accordion>
                 </div>
                 <button (click)="getAnswers()">Получить иформацию</button>
             </form>

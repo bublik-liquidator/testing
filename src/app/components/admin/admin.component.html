@@ -1,0 +1,258 @@
+<div class="container">
+        <button (click)="exit()" class="logout"> 
+            <img class="buttonIMG" src="https://img.icons8.com/?size=512&id=2445&format=png" alt="Выход">
+          </button>
+    <div class="table-container" *ngIf="token">
+       
+        <div class="users_not_complet">
+            <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{
+                userCount }}
+            </p>
+
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Пользователи, которые не прошли тест из таблицы:users
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li *ngFor="let user of ArrUsers">{{ user }}</li>
+                    </ul>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <br>
+        <div class="answer">
+            <h2>Результаты</h2>
+            <table class="tablicc">
+                <tr>
+                    <th>Вопрос</th>
+                    <th>Группа</th>
+                    <th>Полностью согласен</th>
+                    <th>Скорее согласен</th>
+                    <th>Отчасти согласен, отчасти нет</th>
+                    <th>Полностью не согласен</th>
+                    <th>Затрудняюсь ответить, не могу оценить</th>
+                </tr>
+                <tr *ngFor="let result of Results">
+                    <td>{{ result.question }}</td>
+                    <td>{{ result.group_name }}</td>
+                    <td>{{ result.option1_count }}</td>
+                    <td>{{ result.option2_count }}</td>
+                    <td>{{ result.option3_count }}</td>
+                    <td>{{ result.option4_count }}</td>
+                    <td>{{ result.option5_count}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="button-get-user">
+            <button (click)="saveTable()">Сохранить таблицу</button>
+            <button (click)="getResults()">Получить информацию</button>
+        </div>
+        <br>
+        <label for="date">Дата:</label>
+        <input type="date" id="date" name="date">
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description"></textarea>
+        <hr>
+
+        <h1 class="title">Получить пользователей из таблицы :<em>users</em></h1>
+        <div class="form-container">
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Это все юзеры которые есть вообще
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li *ngFor="let user of users"> имя юзера - <strong>{{ user.name }}</strong> || group_id юзера -
+                            <strong>{{ user.group_id }}</strong>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <button (click)="GetUsersFromTable()">Получить юзеров</button>
+        <hr>
+
+        <h1 class="title">Изменить пароль юзеру в таблице:<em>users</em></h1>
+        <div class="ChangeUserPassword">
+            <form>
+                <div>
+                    <label for="createname">name:</label>
+                    <input type="text" id="createname" [(ngModel)]="UpdateUser.name" name="update_name" required>
+                </div>
+                <div>
+                    <label for="new-password">Новый Password:</label>
+                    <input type="text" id="newPassword" [(ngModel)]="UpdateUser.password" name="update_password"
+                        required>
+                </div>
+                <div>
+                    <label for="new-group_id">Новый group_id:</label>
+                    <select id="group_id" [(ngModel)]="groups_name" name="groups_name" required>
+                        <option *ngFor="let group of group_id" [value]="group.name">{{ group.name }}</option>
+                    </select>
+                </div>
+                <button (click)="changePassword()">Изменить пароль</button>
+
+            </form>
+        </div>
+        <hr>
+        <h1 class="title">Создать нового юзера в users: </h1>
+        <div class="createUsers">
+            <form (ngSubmit)="addUser()">
+                <div>
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" [(ngModel)]="CreatUser.name" name="name" />
+                </div>
+                <div>
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" [(ngModel)]="CreatUser.password" name="password" />
+                </div>
+                <div>
+                    <label for="group_id">Group ID:</label>
+                    <input type="number" id="group_id" [(ngModel)]="CreatUser.group_id" name="group_id" />
+                </div>
+                <div>
+                    <label for="role">Роль:</label>
+                    <input type="text" id="role" [(ngModel)]="CreatUser.role" name="role" />
+                </div>
+                <button type="submit">Добавить юзера</button>
+            </form>
+        </div>
+        <hr>
+        <h1 class="title">Добавить новый вопрос в указанную таблицу :<em>questions</em></h1>
+        <div class="addQuestion">
+            <form (submit)="addQuestion()">
+                <div>
+                    <label for="question.group_id">group_id те id группы в которой существует юзер:</label>
+                    <input type="text" id="question.group_id" [(ngModel)]="CreateQuestion.group_id" name="group_id">
+                </div>
+                <div>
+                    <label for="question">Вопрос:</label>
+                    <input type="text" id="question" [(ngModel)]="CreateQuestion.question" name="question">
+                </div>
+                <div>
+                    <label for="option1">Вариант ответа 1:</label>
+                    <input type="text" id="question.option1" [(ngModel)]="CreateQuestion.option1" name="option1">
+                </div>
+                <div>
+                    <label for="option2">Вариант ответа 2:</label>
+                    <input type="text" id="question.option2" [(ngModel)]="CreateQuestion.option2" name="option2">
+                </div>
+                <div>
+                    <label for="option3">Вариант ответа 3:</label>
+                    <input type="text" id="question.option3" [(ngModel)]="CreateQuestion.option3" name="option3">
+                </div>
+                <div>
+                    <label for="option4">Вариант ответа 4:</label>
+                    <input type="text" id="question.option4" [(ngModel)]="CreateQuestion.option4" name="option4">
+                </div>
+                <div>
+                    <label for="option5">Вариант ответа 5:</label>
+                    <input type="text" id="question.option5" [(ngModel)]="CreateQuestion.option5" name="option5">
+                </div>
+                <button type="submit">Добавить вопрос</button>
+            </form>
+        </div>
+        <hr>
+
+        <h1 class="title">Получить ID вопроса в таблице с вопросами :<em></em></h1>
+        <div class="getQuestions">
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Все вопросы
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul>
+                        <li *ngFor="let question of questions">
+                            id вопроса: <strong>{{ question.id }}</strong> сам вопрос: <strong>{{ question.question
+                                }}</strong>
+                            имя группы: <strong>{{ question.group_name}}</strong>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <button (click)="getQuestions()">Получить список вопросов</button>
+        </div>
+        <hr>
+
+        <h1 class="title">Обновить вопрос и ответы на него</h1>
+        <div class="updateQuestion">
+            <form (ngSubmit)="updateQuestion()">
+                <div>
+                    <label for="questionId">Question ID:</label>
+                    <input type="number" id="questionId" [(ngModel)]="UpdateQuestion.id" name="questionId" />
+                </div>
+                <div>
+                    <label for="question">Вопрос:</label>
+                    <input type="text" id="question" [(ngModel)]="UpdateQuestion.question" name="question" />
+                </div>
+                <div>
+                    <label for="option1">Вариант ответа 1:</label>
+                    <input type="text" id="option1" [(ngModel)]="UpdateQuestion.option1" name="option1" />
+                </div>
+                <div>
+                    <label for="option2">Вариант ответа 2:</label>
+                    <input type="text" id="option2" [(ngModel)]="UpdateQuestion.option2" name="option2" />
+                </div>
+                <div>
+                    <label for="option3">Вариант ответа 3:</label>
+                    <input type="text" id="option3" [(ngModel)]="UpdateQuestion.option3" name="option3" />
+                </div>
+                <div>
+                    <label for="option4">Вариант ответа 4:</label>
+                    <input type="text" id="option4" [(ngModel)]="UpdateQuestion.option4" name="option4" />
+                </div>
+                <div>
+                    <label for="option5">Вариант ответа 5:</label>
+                    <input type="text" id="option5" [(ngModel)]="UpdateQuestion.option5" name="option5" />
+                </div>
+                <div>
+                    <label for="group_id">Group ID:</label>
+                    <input type="number" id="group_id" [(ngModel)]="UpdateQuestion.group_id" name="group_id" />
+                </div>
+                <button type="submit">Обновить вопрос</button>
+            </form>
+        </div>
+        <hr>
+
+
+        <h1 class="title">Получить иформацию по таблице где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
+        <div class="getQuestions">
+            <form>
+                <div *ngIf="questions">
+                    <mat-accordion>
+                        <mat-expansion-panel hideToggle>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h2>Вопрос</h2>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ul>
+                                <li *ngFor="let answer of Ansswers">
+                                    это ID вопроса :<strong>{{ answer.id }}</strong> - ID юзера <strong>{{
+                                        answer.user_id
+                                        }}</strong> -- это имя
+                                    группы <strong>{{ answer.group_name }}</strong>
+                                </li>
+                            </ul>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+                <button (click)="getAnswers()">Получить иформацию</button>
+            </form>
+        </div>
+        <hr>
+
+        <h1 class="title">ВАЖНО ПРОСТО ТАК НЕ ТЫКАТЬ Очистить ответы юзеров в таблице(answers):<em>answers</em></h1>
+        <div class="ClearAnsvers">
+            <button (click)="ClearAnswers()">Очистить ТО ЧТО ВЫБРАЛИ ВСЕ ЮЗЕРЫ</button>
+        </div>
+    </div>
+
+</div>

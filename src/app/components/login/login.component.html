@@ -1,0 +1,10 @@
+<div class="container">
+    <div *ngIf="!isAdmin" class="log">
+        <div class="centered-text">ВАЖНО! Тест можно пройти только один раз</div>
+        <form class="login" *ngIf="!token" (ngSubmit)="login()">
+            <input type="text" placeholder="Login" [(ngModel)]="user.name" name="name" />
+            <input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" />
+            <button type="submit">Вход</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="table-container" class="questionsr">
+        <form *ngIf="token">
+            <div *ngFor="let question of questions; let i = index">
+                <h2> {{ i + 1 }}: {{ question.question }}</h2>
+                <label>
+                    <input type="radio" name="{{ 'answer' + i }}" [value]="1" [(ngModel)]="answers[i]" />
+                    {{ question.option1 }}
+                </label>
+                <br />
+                <label>
+                    <input type="radio" name="{{ 'answer' + i }}" [value]="2" [(ngModel)]="answers[i]" />
+                    {{ question.option2 }}
+                </label>
+                <br />
+                <label>
+                    <input type="radio" name="{{ 'answer' + i }}" [value]="3" [(ngModel)]="answers[i]" />
+                    {{ question.option3 }}
+                </label>
+                <br />
+                <label>
+                    <input type="radio" name="{{ 'answer' + i }}" [value]="4" [(ngModel)]="answers[i]" />
+                    {{ question.option4 }}
+                </label>
+                <br />
+                <label>
+                    <input type="radio" name="{{ 'answer' + i }}" [value]="5" [(ngModel)]="answers[i]" />
+                    {{ question.option5 }}
+                </label>
+                <br />
+            </div>
+            <button *ngIf="showSubmitButton" type="submit" [disabled]="!isFormValid()"
+                [class.not-allowed-icon]="!isFormValid()" (click)="submitAnswers()">
+                Отправить
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,235 @@
+.container {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+textarea {
+    height: 5em;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    border-radius: 10px;
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.login::before {
+    content: "";
+    background-image: url("https://p4.wallpaperbetter.com/wallpaper/600/920/856/minimalism-4k-best-ever-wallpaper-preview.jpg");
+    border-radius: 10px;
+    filter: blur(0px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.log {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form h2 {
+    text-align: left;
+}
+
+input [type="radio"] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input {
+    font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+    background-image: url("https://img.icons8.com/?size=512&id=83190&format=png");
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+}
+
+input:not([type="radio"]) {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #cccccc48;
+    border-radius: 10px;
+}
+
+button {
+    width: 50%;
+    max-width: 300px;
+    background-color: #bfefff;
+    color: rgb(124, 124, 124);
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+button:hover {
+    background-color: #425170;
+    color: #ffffff;
+    font-family: "Montserrat", sans-serif;
+}
+
+.button-get-user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login button {
+    width: 50%;
+    max-width: 150px;
+    background-color: #707070;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+.login button:hover {
+    background-color: #bfc2bf;
+    color: rgb(66, 66, 66);
+    font-family: "Montserrat", sans-serif;
+}
+
+@media (max-width: 600px) {
+
+    table,
+    th,
+    td {
+        font-size: 14px;
+        padding: 4px;
+        text-align: center;
+    }
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 20px;
+    background-color: #add8e6;
+    padding: 10px;
+    border-radius: 10px;
+
+}
+
+@media (max-width: 900px) {
+
+    input[type="text"],
+    input[type="password"] {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 700px) {
+
+    input[type="text"],
+    input[type="password"] {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 500px) {
+    .questionsr {
+        max-width: 100%;
+        width: 100%;
+        margin: auto;
+        word-wrap: break-word;
+    }
+
+    .question {
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .questionsr form {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 80%;
+        max-width: 95%;
+    }
+}
+
+
+
+
+/* ---------------------------------Matereral---------------------- */
+/* :host ::ng-deep .mat-expansion {
+    font-family: "Montserrat", sans-serif!important;
+  }
+  :host ::ng-deep .mat-expansion-panel {
+    font-family: "Montserrat", sans-serif!important;
+  } */
+
+/* .mat-expansion-panel-header-title,
+  .mat-expansion-panel-header-description,
+  .mat-expansion-panel-content,
+  .mat-typography,
+  .mat-expansion-panel-body,
+  .mat-expansion-panel-header,
+  .mat-accordion,
+  .mat-expansion-panel,
+  .mat-panel-title,
+  .mat-expansion-panel-content  {
+    font-family: "Montserrat", sans-serif !important;
+  }
+  .mat-expansion-panel{
+    font-family: "Montserrat", sans-serif !important;
+  } */
+:host ::ng-deep mat-accordion,
+:host ::ng-deep mat-expansion-panel,
+:host ::ng-deep mat-panel-title,
+:host ::ng-deep mat-expansion-panel-header,
+:host ::ng-deep ul {
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 16px;
+
+}
+
+.form-container {
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 16px;
+
+}

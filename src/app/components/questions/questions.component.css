@@ -1,0 +1,248 @@
+.container {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.questionsr form {
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+textarea {
+    height: 5em;
+}
+
+
+form h2 {
+    text-align: left;
+}
+
+input [type="radio"] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input {
+    font-family: "Montserrat", sans-serif;
+}
+
+input[type="text"] {
+    background-image: url("https://img.icons8.com/?size=512&id=83190&format=png");
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+}
+
+input:not([type="radio"]) {
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #cccccc48;
+    border-radius: 10px;
+}
+
+button {
+    width: 50%;
+    max-width: 300px;
+    background-color: #bfefff;
+    color: rgb(124, 124, 124);
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+button:hover {
+    background-color: #425170;
+    color: #ffffff;
+    font-family: "Montserrat", sans-serif;
+}
+
+.button-get-user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login button {
+    width: 50%;
+    max-width: 150px;
+    background-color: #707070;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+.login button:hover {
+    background-color: #bfc2bf;
+    color: rgb(66, 66, 66);
+    font-family: "Montserrat", sans-serif;
+}
+
+/* ... other styles ... */
+/* styles.css */
+
+button[disabled] {
+    cursor: not-allowed;
+}
+
+.not-allowed-icon {
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/1d/No_Symbol.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+
+@media (max-width: 600px) {
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin-bottom: 20px;
+        background-color: #add8e6;
+        padding: 10px;
+        border-radius: 10px;
+
+    }
+
+    .tablesList {
+        background-color: #add8e6;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    input[type="text"],
+    input[type="password"] {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 700px) {
+
+    input[type="text"],
+    input[type="password"] {
+        width: 90%;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 500px) {
+    .questionsr {
+        max-width: 100%;
+        width: 100%;
+        margin: auto;
+        word-wrap: break-word;
+    }
+
+    .question {
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .questionsr form {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 80%;
+        max-width: 95%;
+    }
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed #000;
+    margin: 20px 0;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+    font-family: "Montserrat", sans-serif;
+    text-shadow: 1px 1px #fff;
+}
+
+
+
+.form-container label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 18px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+.centered-text {
+    text-align: center;
+}
+
+select#group_id {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    padding: 12px 20px;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 10px;
+}
+
+/* ---------------------------------Matereral---------------------- */
+
+:host ::ng-deep mat-accordion,
+:host ::ng-deep mat-expansion-panel,
+:host ::ng-deep mat-panel-title,
+:host ::ng-deep mat-expansion-panel-header,
+:host ::ng-deep ul {
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 16px;
+
+}
+
+.form-container {
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 16px;
+
+}

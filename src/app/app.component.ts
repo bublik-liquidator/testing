@@ -19,8 +19,8 @@ import { Result } from './entities/result ';
 export class AppComponent {
     CreatUser = new User();
     UpdateUser = new User();
-    group_id:any[] = [];
-    groups_name:any;
+    group_id: any[] = [];
+    groups_name: any;
     UpdateQuestion = new Question();
     CreateQuestion = new Question();
     Results: Result[] = [];
@@ -29,7 +29,8 @@ export class AppComponent {
     //Ansswers: Answer[]=[]
     Ansswers: any;
 
-    adres: string = "https://test.kzkvv.me/api";
+    adres: string = "http://localhost:3000";
+    
     user = new User();
     users: User[] = [];
 
@@ -94,38 +95,26 @@ export class AppComponent {
         return this.answers.every( ( answer ) => answer !== undefined );
     }
 
-    UpdateAllInfo(){
+    UpdateAllInfo() {
         this.GetUsersFromTable();
         this.getResults();
         this.getQuestions()
         this.getAnswers()
-        this.http.post<string[]>( this.adres + '/users-not-completed', {}, {
-            headers: new HttpHeaders( {
-                Authorization: `Bearer ${ this.token }`,
-            } ),
-        } )
+        this.http.post<string[]>( this.adres + '/users-not-completed', {} )
             .subscribe( ( users ) => {
                 console.log( users + 'users ' );
                 this.ArrUsers = users;
             } );
-        this.http.post<number>( this.adres + '/user-count', {}, {
-            headers: new HttpHeaders( {
-                Authorization: `Bearer ${ this.token }`,
-            } ),
-        } )
+        this.http.post<number>( this.adres + '/user-count', {} )
             .subscribe( ( count ) => {
                 this.userCount = count;
             } );
-        
-        this.http.post<string[]>( this.adres + '/users_group_id', {}, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
-            } )
-                .subscribe( ( data: any ) => {
-                    console.log( data + 'data ' );
-                    this.group_id = data;
-                } ); 
+
+        this.http.post<string[]>( this.adres + '/users_group_id', {} )
+            .subscribe( ( data: any ) => {
+                console.log( data + 'data ' );
+                this.group_id = data;
+            } );
     }
 
     login() {
@@ -138,28 +127,16 @@ export class AppComponent {
                         const decodedToken = jwt_decode<{ user_id: number; isAdmin: boolean }>( this.token );
                         if ( decodedToken.isAdmin ) {//если зашёл админ
                             this.isAdmin = true;
-                            this.http.post<string[]>( this.adres + '/users-not-completed', {}, {
-                                headers: new HttpHeaders( {
-                                    Authorization: `Bearer ${ this.token }`,
-                                } ),
-                            } )
+                            this.http.post<string[]>( this.adres + '/users-not-completed', {} )
                                 .subscribe( ( users ) => {
-                                    console.log( users + 'users ' );
+                                    console.log( users + ' users' );
                                     this.ArrUsers = users;
                                 } );
-                            this.http.post<number>( this.adres + '/user-count', {}, {
-                                headers: new HttpHeaders( {
-                                    Authorization: `Bearer ${ this.token }`,
-                                } ),
-                            } )
+                            this.http.post<number>( this.adres + '/user-count', {} )
                                 .subscribe( ( count ) => {
                                     this.userCount = count;
                                 } );
-                            this.http.post<Result[]>( this.adres + '/results', {}, {
-                                headers: new HttpHeaders( {
-                                    Authorization: `Bearer ${ this.token }`,
-                                } ),
-                            } )
+                            this.http.post<Result[]>( this.adres + '/results', {} )
                                 .subscribe( ( data ) => {
                                     this.Results = data;
                                 },
@@ -167,11 +144,7 @@ export class AppComponent {
                                         console.error( err );
                                         this.openErrorDialog( "Не успешно " + err.message );
                                     } );
-                            this.http.post<User[]>( this.adres + '/users', {}, {
-                                headers: new HttpHeaders( {
-                                    Authorization: `Bearer ${ this.token }`,
-                                } ),
-                            } )
+                            this.http.post<User[]>( this.adres + '/users', {} )
                                 .subscribe(
                                     ( data ) => {
                                         this.users = data;
@@ -181,23 +154,14 @@ export class AppComponent {
                                         this.openErrorDialog( "Не успешно " + err );
                                     }
                                 );
-                            this.http.post<string[]>( this.adres + '/users_group_id', {}, {
-                                    headers: new HttpHeaders( {
-                                        Authorization: `Bearer ${ this.token }`,
-                                    } ),
-                                } )
-                                    .subscribe( ( data: any ) => {
-                                        console.log( data + 'data ' );
-                                        this.group_id = data;
-                                    } ); 
+                            this.http.post<string[]>( this.adres + '/users_group_id', {} )
+                                .subscribe( ( data: any ) => {
+                                    console.log( data + 'data ' );
+                                    this.group_id = data;
+                                } );
                         }
                         else {
-                            this.http.post<Question[]>( this.adres + '/checkTest', {}, {
-                                headers: new HttpHeaders( {
-                                    Authorization: `Bearer ${ this.token }`,
-                                } ),
-                                params: { name: this.user.name }
-                            } )
+                            this.http.post<Question[]>( this.adres + '/checkTest', {} )
                                 .subscribe( ( data: any ) => {
                                     this.questions = data.questions;
                                     this.answers = new Array( this.questions.length ).fill( undefined );
@@ -226,13 +190,8 @@ export class AppComponent {
     //         this.group_id = data;
     //     } ); 
     // }
-    GetUsersFromTable(){
-        this.http.post<User[]>( this.adres + '/users', {}, {
-            headers: new HttpHeaders( {
-                Authorization: `Bearer ${ this.token }`,
-            } ),
-            
-        } )
+    GetUsersFromTable() {
+        this.http.post<User[]>( this.adres + '/users', {} )
             .subscribe(
                 ( data ) => {
                     this.users = data;
@@ -245,11 +204,7 @@ export class AppComponent {
     }
     getResults() {
         if ( this.token )
-            this.http.post<Result[]>( this.adres + '/results', {}, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
-            } )
+            this.http.post<Result[]>( this.adres + '/results', {} )
                 .subscribe( ( data ) => {
                     this.Results = data;
                 },
@@ -261,11 +216,7 @@ export class AppComponent {
 
     submitAnswers() {
         if ( this.token ) {
-            this.http.post( this.adres + '/test', { answers: this.answers, }, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
-            } )
+            this.http.post( this.adres + '/test', { answers: this.answers, } )
                 .subscribe(
                     ( res ) => {
                         console.log( res );
@@ -285,13 +236,9 @@ export class AppComponent {
     }
 
     changePassword() {
-        console.log(this.groups_name+"groups_name")
+        console.log( this.groups_name + "groups_name" )
         if ( this.token )
-            this.http.post<{ message: string }>( this.adres + '/change-password', { name: this.UpdateUser.name, newPassword: this.UpdateUser.password, groups_name: this.groups_name }, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
-            } )
+            this.http.post<{ message: string }>( this.adres + '/change-password', { name: this.UpdateUser.name, newPassword: this.UpdateUser.password, groups_name: this.groups_name } )
                 .subscribe(
                     ( res ) => {
                         console.log( res );
@@ -318,11 +265,6 @@ export class AppComponent {
                         option4: this.CreateQuestion.option4,
                         option5: this.CreateQuestion.option5,
                         group_id: this.CreateQuestion.group_id,
-                    },
-                    {
-                        headers: new HttpHeaders( {
-                            Authorization: `Bearer ${ this.token }`,
-                        } ),
                     }
                 )
                 .subscribe(
@@ -337,11 +279,7 @@ export class AppComponent {
     }
 
     getQuestions() {
-        this.http.post( this.adres + '/get-questions', {}, {
-            headers: new HttpHeaders( {
-                Authorization: `Bearer ${ this.token }`,
-            } ),
-        } ).subscribe(
+        this.http.post( this.adres + '/get-questions', {} ).subscribe(
             ( data: any ) => {
                 // Handle successful response
                 this.questions = data;
@@ -363,10 +301,6 @@ export class AppComponent {
                 option4: this.UpdateQuestion.option4,
                 option5: this.UpdateQuestion.option5,
                 group_id: this.UpdateQuestion.group_id
-            }, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
             } )
                 .subscribe(
                     ( res ) => {
@@ -385,10 +319,6 @@ export class AppComponent {
             password: this.CreatUser.password,
             group_id: this.CreatUser.group_id,
             role: this.CreatUser.role,
-        }, {
-            headers: new HttpHeaders( {
-                Authorization: `Bearer ${ this.token }`,
-            } ),
         } )
             .subscribe(
                 ( data ) => {
@@ -404,11 +334,7 @@ export class AppComponent {
 
     getAnswers() {
         if ( this.token )
-            this.http.post( this.adres + '/get-ansver', {}, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
-            } )
+            this.http.post( this.adres + '/get-ansver', {} )
                 .subscribe(
                     ( data ) => {
                         this.Ansswers = data;
@@ -423,11 +349,7 @@ export class AppComponent {
 
     ClearAnswers() {
         if ( this.token )
-            this.http.post( this.adres + '/clear-table', {}, {
-                headers: new HttpHeaders( {
-                    Authorization: `Bearer ${ this.token }`,
-                } ),
-            } ).subscribe(
+            this.http.post( this.adres + '/clear-table', {} ).subscribe(
                 res => this.openErrorDialog( res ),
                 err => this.openErrorDialog( "Не успешно " + err.error )
             );

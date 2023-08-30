@@ -24,6 +24,11 @@ After selecting all the answers, the user clicks the Send button and that's all 
 - Get information from the table where user IDs and their answer options are stored.
 - Clear user answers in the table.
 
+<h3>Project schema</h3>
+<figure>
+  <img src="pictures/APP/1.png" alt="Project schema">
+</figure>
+
 ## Launch
 
 - Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

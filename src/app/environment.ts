@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    serverUrl: 'http://localhost:3000'  
+    serverUrl: 'https://test.kzkvv.me'  
       // serverUrl: process.env['SERVER_URL']
 
   };

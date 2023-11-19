@@ -1,9 +1,7 @@
 <div class="container">
-        <button (click)="exit()" class="logout"> 
-            <img class="buttonIMG" src="https://img.icons8.com/?size=512&id=2445&format=png" alt="Выход">
-          </button>
+    <button (click)="exit()" class="logout">ВЫХОД</button>
     <div class="table-container" *ngIf="token">
-       
+        <br>
         <div class="users_not_complet">
             <p style="font-weight: bold; text-align: center;">Количество пользователей, которые прошли тест: {{
                 userCount }}
@@ -35,8 +33,8 @@
                     <th>Полностью не согласен</th>
                     <th>Затрудняюсь ответить, не могу оценить</th>
                 </tr>
-                <tr *ngFor="let result of Results">
-                    <td>{{ result.question }}</td>
+                <tr *ngFor="let result of Results; let i = index">
+                    <td>{{ i + 1 }}. {{ result.question }}</td>
                     <td>{{ result.group_name }}</td>
                     <td>{{ result.option1_count }}</td>
                     <td>{{ result.option2_count }}</td>
@@ -56,6 +54,32 @@
         <label for="description">Описание:</label>
         <textarea id="description" name="description"></textarea>
         <hr>
+        <h1> Важно! удалятся ответы юзеров и сами юзеры</h1>
+        <button class="clearTables" (click)="clearTables()">Очистить таблицы</button>
+        <hr>
+        <h1>Добавить юзеров в таблицу (по умолчанию group_id == 2 и 3)</h1>
+
+        <input class="numUsers" [(ngModel)]="numUsers" placeholder="Введите количество пользователей"><br>
+        <input class="groupId1" [(ngModel)]="group_id1" placeholder="Введите group_id1"><br>
+        <input class="groupId2" [(ngModel)]="group_id2" placeholder="Введите group_id2"><br>
+        <div class="button-get-user">
+            <button class="populateUsers" (click)="populateUsers()">Заполнить пользователей</button>
+            <button (click)="saveUserData()">Сохранить инфу о userах в Word</button>
+        </div>
+        <table id="usersData" class="tablicc" *ngIf="usersData.length > 0">
+            <tr>
+                <th>Login</th>
+                <th>Password</th>
+                <th>group_name</th>
+            </tr>
+            <tr *ngFor="let user of usersData">
+                <td>{{user.name}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.group_name}}</td>
+            </tr>
+        </table>
+
+        <hr>
 
         <h1 class="title">Получить пользователей из таблицы :<em>users</em></h1>
         <div class="form-container">
@@ -63,7 +87,7 @@
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Это все юзеры которые есть вообще
+                            <b>Это все юзеры которые есть вообще *Тыкай сюда*</b>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <ul>
@@ -123,7 +147,7 @@
             </form>
         </div>
         <hr>
-        <h1 class="title">Добавить новый вопрос в указанную таблицу :<em>questions</em></h1>
+        <!-- <h1 class="title">Добавить новый вопрос в указанную таблицу :<em>questions</em></h1>
         <div class="addQuestion">
             <form (submit)="addQuestion()">
                 <div>
@@ -157,9 +181,9 @@
                 <button type="submit">Добавить вопрос</button>
             </form>
         </div>
-        <hr>
+        <hr> -->
 
-        <h1 class="title">Получить ID вопроса в таблице с вопросами :<em></em></h1>
+        <!-- <h1 class="title">Получить ID вопроса в таблице с вопросами :<em></em></h1>
         <div class="getQuestions">
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
@@ -179,9 +203,9 @@
             </mat-accordion>
             <button (click)="getQuestions()">Получить список вопросов</button>
         </div>
-        <hr>
+        <hr> -->
 
-        <h1 class="title">Обновить вопрос и ответы на него</h1>
+        <!-- <h1 class="title">Обновить вопрос и ответы на него</h1>
         <div class="updateQuestion">
             <form (ngSubmit)="updateQuestion()">
                 <div>
@@ -219,7 +243,7 @@
                 <button type="submit">Обновить вопрос</button>
             </form>
         </div>
-        <hr>
+        <hr> -->
 
 
         <h1 class="title">Получить иформацию по таблице где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
@@ -251,7 +275,7 @@
 
         <h1 class="title">ВАЖНО ПРОСТО ТАК НЕ ТЫКАТЬ Очистить ответы юзеров в таблице(answers):<em>answers</em></h1>
         <div class="ClearAnsvers">
-            <button (click)="ClearAnswers()">Очистить ТО ЧТО ВЫБРАЛИ ВСЕ ЮЗЕРЫ</button>
+            <button class="ClearAnsversBtn" (click)="ClearAnswers()">Очистить ТО ЧТО ВЫБРАЛИ ВСЕ ЮЗЕРЫ</button>
         </div>
     </div>
 

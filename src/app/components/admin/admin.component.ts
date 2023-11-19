@@ -40,8 +40,15 @@ export class AdminComponent {
   token: any;
   userCount: number = 0;
 
+
+  usersData:User[] = [];
+  numUsers: number=60;
+  group_id1:number=2;
+  group_id2:number=3;
+
+
   title = 'my-app';
-  constructor( private http: HttpClient, public dialog: MatDialog, private userService: UserServiceService,private router: Router ) { }
+  constructor( private http: HttpClient, public dialog: MatDialog, private userService: UserServiceService, private router: Router ) { }
   ngOnInit() {
     this.token = localStorage.getItem( 'token' );
     this.userService.getUsersNotCompleted().subscribe( ( users ) => {
@@ -105,6 +112,60 @@ export class AdminComponent {
       this.openErrorDialog( 'Table element not found' );
     }
   }
+
+  saveUserData() {
+    const tableElement = document.querySelector('#usersData');
+    if (tableElement) {
+      let tableHtml = tableElement.outerHTML;
+      tableHtml = tableHtml.replace(
+        /<table/g,
+        '<table style="border-collapse: collapse; max-width: 100%;"'
+      );
+      tableHtml = tableHtml.replace(
+        /<td/g,
+        '<td style="border: 1px solid black; padding: 5px;"'
+      );
+      tableHtml = tableHtml.replace(
+        /<th/g,
+        '<th style="border: 1px solid black; padding: 5px;"'
+      );
+      tableHtml = tableHtml.replace(/<br>/g, '\n');
+      const content = `User Data:\n\n${tableHtml}`;
+      const blob = new Blob([content], { type: 'application/vnd.ms-word' });
+      FileSaver.saveAs(blob, 'userData.doc');
+    } else {
+      this.openErrorDialog('Table element not found');
+    }
+  }
+  
+
+  clearTables() {
+    this.userService.clearTables().subscribe(
+      ( data: any ) => {
+        console.log( data );
+        this.openErrorDialog( "Успешно " + data );
+      },
+      ( err: { message: string; } ) => {
+        console.error( err );
+        this.openErrorDialog( "Не успешно " + err.message );
+      }
+    );
+  }
+
+  populateUsers() {
+    this.openErrorDialog( "Пожалуйста,подождите немного, данные сейчас загрузятся" );
+
+    this.userService.populateUsers( this.numUsers, this.group_id1, this.group_id2 ).subscribe(
+      ( data ) => {
+        this.usersData = data;
+      },
+      ( err ) => {
+        console.error( err );
+        this.openErrorDialog( "Не успешно " + err.message );
+      }
+    );
+}
+
 
   openErrorDialog( inf: any ) {
     const dialogRef = this.dialog.open( ErrorDialogComponent, {
@@ -268,8 +329,8 @@ export class AdminComponent {
       );
   }
 
-  exit(){
-    localStorage.removeItem("token");
-    this.router.navigate(['']);
+  exit() {
+    localStorage.removeItem( "token" );
+    this.router.navigate( [ '' ] );
   }
 }

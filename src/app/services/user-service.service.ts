@@ -32,8 +32,18 @@ export class UserServiceService {
   getUsersGroupId(): Observable<string[]> {
     return this.http.post<string[]>( environment.serverUrl + '/users_group_id', {} );
   }
+
   checkTest(): Observable<Question[]> {
     return this.http.post<Question[]>(environment.serverUrl + '/checkTest', {});
   }
+
+  clearTables(): Observable<any> {
+    return this.http.post<any>(environment.serverUrl + '/clear-tables', {});
+  }
+  
+  populateUsers(numUsers: number, group_id1: number, group_id2: number): Observable<any[]> {
+    return this.http.post<any[]>(environment.serverUrl + '/populate-users', { numUsers, group_id1, group_id2 });
+}
+  
 
 }

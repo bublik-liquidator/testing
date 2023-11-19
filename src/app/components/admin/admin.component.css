@@ -1,5 +1,5 @@
 .container {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Montserrat"!important;
 }
 
 label {
@@ -63,7 +63,7 @@ input [type="radio"] {
 }
 
 input {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
 }
 
 input[type="text"] {
@@ -81,6 +81,20 @@ input:not([type="radio"]) {
   border: 2px solid #cccccc48;
   border-radius: 10px;
 }
+.numUsers{
+  width:100%;
+  box-sizing: border-box;
+}
+
+.groupId1{
+  width:100%;
+  box-sizing: border-box;
+}
+
+.groupId2{
+  width:100%;
+  box-sizing: border-box;
+}
 
 button {
   /* width: 50%; */
@@ -92,13 +106,13 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
 }
 
 button:hover {
   background-color: #425170;
   color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
 }
 
 .button-get-user {
@@ -116,15 +130,22 @@ button:hover {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
 }
 
 .login button:hover {
   background-color: #bfc2bf;
   color: rgb(66, 66, 66);
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
 }
-
+.clearTables{
+  background-color: #a10a0a;
+  color: white;
+}
+.clearTables:hover{
+  background-color: #ffa7a7;
+  color: rgb(0, 0, 0);
+}
 /* ... other styles ... */
 /* styles.css */
 
@@ -274,6 +295,23 @@ th {
   border-radius: 10px;
 }
 
+.ClearAnsversBtn{
+  background-color: #a10a0a;
+  color: white;
+  width: 100%;
+  box-sizing: border-box; 
+}
+
+.ClearAnsversBtn:hover{
+  background-color: #ffa7a7;
+  color: rgb(0, 0, 0);
+}
+
+.populateUsers{
+  background-color: #0a5aa1;
+  color: white;
+}
+
 @media (max-width: 900px) {
 
   input[type="text"],
@@ -338,7 +376,7 @@ hr {
   font-weight: bold;
   text-align: center;
   color: #000000;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
   text-shadow: 1px 1px #fff;
 }
 
@@ -368,14 +406,15 @@ select#group_id {
   color: rgb(0, 0, 0);
   padding: 12px 20px;
   border: none;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat";
   border-radius: 10px;
 }
 
 .logout {
   position: absolute;
   top: 0px;
-  right: 5%;
+  right: 1%;
+  width: 5%;
 }  
 
  
@@ -410,13 +449,19 @@ select#group_id {
 :host ::ng-deep mat-panel-title,
 :host ::ng-deep mat-expansion-panel-header,
 :host ::ng-deep ul {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Montserrat" !important;
   font-size: 16px;
 
 }
 
 .form-container {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Montserrat" !important;
   font-size: 16px;
 
+}
+
+@media (max-width: 1367px) {
+  .logout {
+    width: 10%; /* Измените это значение в соответствии с вашими потребностями */
+  }
 }

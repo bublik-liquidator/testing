@@ -1,5 +1,11 @@
 .container {
-  font-family: "Montserrat"!important;
+  font-family: "Montserrat" !important;
+  width: 50%;
+  margin: auto;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 label {
@@ -60,10 +66,12 @@ input [type="radio"] {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
+  width: 100%;
 }
 
 input {
   font-family: "Montserrat";
+  width: 100%;
 }
 
 input[type="text"] {
@@ -80,19 +88,21 @@ input:not([type="radio"]) {
   box-sizing: border-box;
   border: 2px solid #cccccc48;
   border-radius: 10px;
+
 }
-.numUsers{
-  width:100%;
+
+.numUsers {
+  width: 100%;
   box-sizing: border-box;
 }
 
-.groupId1{
-  width:100%;
+.groupId1 {
+  width: 100%;
   box-sizing: border-box;
 }
 
-.groupId2{
-  width:100%;
+.groupId2 {
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -138,14 +148,17 @@ button:hover {
   color: rgb(66, 66, 66);
   font-family: "Montserrat";
 }
-.clearTables{
+
+.clearTables {
   background-color: #a10a0a;
   color: white;
 }
-.clearTables:hover{
-  background-color: #ffa7a7;
+
+.clearTables:hover {
+  background-color: #ff6f6f;
   color: rgb(0, 0, 0);
 }
+
 /* ... other styles ... */
 /* styles.css */
 
@@ -161,8 +174,8 @@ button[disabled] {
 }
 
 .table-container {
-  width: 80%;
-  max-width: 800px;
+  width: 90%;
+  /* max-width: 800px; */
   margin: 0 auto;
 }
 
@@ -295,20 +308,20 @@ th {
   border-radius: 10px;
 }
 
-.ClearAnsversBtn{
+.ClearAnsversBtn {
   background-color: #a10a0a;
   color: white;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
-.ClearAnsversBtn:hover{
-  background-color: #ffa7a7;
+.ClearAnsversBtn:hover {
+  background-color: #ff6f6f;
   color: rgb(0, 0, 0);
 }
 
-.populateUsers{
-  background-color: #0a5aa1;
+.populateUsers {
+  background-color: #5c95ce;
   color: white;
 }
 
@@ -408,6 +421,7 @@ select#group_id {
   border: none;
   font-family: "Montserrat";
   border-radius: 10px;
+  width: 100%;
 }
 
 .logout {
@@ -415,12 +429,13 @@ select#group_id {
   top: 0px;
   right: 1%;
   width: 5%;
-}  
+}
 
- 
-.buttonIMG{
+
+.buttonIMG {
   width: 10%;
- }
+}
+
 /* ---------------------------------Matereral---------------------- */
 /* :host ::ng-deep .mat-expansion {
     font-family: "Montserrat", sans-serif!important;
@@ -462,6 +477,7 @@ select#group_id {
 
 @media (max-width: 1367px) {
   .logout {
-    width: 10%; /* Измените это значение в соответствии с вашими потребностями */
+    width: 10%;
+    /* Измените это значение в соответствии с вашими потребностями */
   }
 }

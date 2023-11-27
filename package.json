@@ -25,7 +25,7 @@
     "dotenv": "^16.3.1",
     "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
-    "jspdf-autotable": "^3.5.31",
+    "jspdf-autotable": "^3.6.0",
     "jwt-decode": "^3.1.2",
     "os-browserify": "^0.3.0",
     "path": "^0.12.7",

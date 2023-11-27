@@ -44,24 +44,29 @@
                 </tr>
             </table>
         </div>
-        <div class="button-get-user">
-            <button (click)="saveTable()">Сохранить таблицу</button>
-            <button (click)="getResults()">Получить информацию</button>
-        </div>
         <br>
         <label for="date">Дата:</label>
         <input type="date" id="date" name="date">
         <label for="description">Описание:</label>
         <textarea id="description" name="description"></textarea>
+        <div class="button-get-user">
+            <button (click)="saveTable()">Сохранить таблицу</button>
+            <button (click)="getResults()">Получить информацию</button>
+        </div>
         <hr>
-        <h1> Важно! удалятся ответы юзеров и сами юзеры</h1>
-        <button class="clearTables" (click)="clearTables()">Очистить таблицы</button>
-        <hr>
-        <h1>Добавить юзеров в таблицу (по умолчанию group_id == 2 и 3)</h1>
 
-        <input class="numUsers" [(ngModel)]="numUsers" placeholder="Введите количество пользователей"><br>
-        <input class="groupId1" [(ngModel)]="group_id1" placeholder="Введите group_id1"><br>
-        <input class="groupId2" [(ngModel)]="group_id2" placeholder="Введите group_id2"><br>
+        <h1>Добавить юзеров в таблицу (советую ставить group_id == 2 и 3)</h1>
+        <div class="addUsers">
+            <label for="numUsers">Введите количество пользователей:</label>
+            <input class="numUsers" [(ngModel)]="numUsers" placeholder="Введите количество пользователей"><br>
+
+            <label for="groupId1">Введите group_id1:</label>
+            <input class="groupId1" [(ngModel)]="group_id1" placeholder="Введите group_id1"><br>
+
+            <label for="groupId2">Введите group_id2:</label>
+            <input class="groupId2" [(ngModel)]="group_id2" placeholder="Введите group_id2"><br>
+        </div>
+        <br>
         <div class="button-get-user">
             <button class="populateUsers" (click)="populateUsers()">Заполнить пользователей</button>
             <button (click)="saveUserData()">Сохранить инфу о userах в Word</button>
@@ -78,10 +83,13 @@
                 <td>{{user.group_name}}</td>
             </tr>
         </table>
-
+        <hr>
+        
+        <h1> Важно! удалятся ответы юзеров и сами юзеры</h1>
+        <button class="clearTables" (click)="clearTables()">Очистить таблицы</button>
         <hr>
 
-        <h1 class="title">Получить пользователей из таблицы :<em>users</em></h1>
+        <h1>Получить пользователей из таблицы :<em>users</em></h1>
         <div class="form-container">
             <mat-accordion>
                 <mat-expansion-panel hideToggle>
@@ -101,7 +109,7 @@
         <button (click)="GetUsersFromTable()">Получить юзеров</button>
         <hr>
 
-        <h1 class="title">Изменить пароль юзеру в таблице:<em>users</em></h1>
+        <h1>Изменить пароль юзеру в таблице:<em>users</em></h1>
         <div class="ChangeUserPassword">
             <form>
                 <div>
@@ -119,12 +127,13 @@
                         <option *ngFor="let group of group_id" [value]="group.name">{{ group.name }}</option>
                     </select>
                 </div>
+                <br>
                 <button (click)="changePassword()">Изменить пароль</button>
 
             </form>
         </div>
         <hr>
-        <h1 class="title">Создать нового юзера в users: </h1>
+        <h1>Создать нового юзера в users: </h1>
         <div class="createUsers">
             <form (ngSubmit)="addUser()">
                 <div>
@@ -246,7 +255,7 @@
         <hr> -->
 
 
-        <h1 class="title">Получить иформацию по таблице где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
+        <h1>Получить иформацию по таблице где лежат ID юзеров и их вариаты ответов:<em>answers</em></h1>
         <div class="getQuestions">
             <form>
                 <div *ngIf="questions">
@@ -268,12 +277,14 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>
+                <br>
+
                 <button (click)="getAnswers()">Получить иформацию</button>
             </form>
         </div>
         <hr>
 
-        <h1 class="title">ВАЖНО ПРОСТО ТАК НЕ ТЫКАТЬ Очистить ответы юзеров в таблице(answers):<em>answers</em></h1>
+        <h1>ВАЖНО ПРОСТО ТАК НЕ ТЫКАТЬ Очистить ответы юзеров в таблице(answers):<em>answers</em></h1>
         <div class="ClearAnsvers">
             <button class="ClearAnsversBtn" (click)="ClearAnswers()">Очистить ТО ЧТО ВЫБРАЛИ ВСЕ ЮЗЕРЫ</button>
         </div>

@@ -237,9 +237,14 @@ th {
   }
 }
 
+ul li {
+  margin: 0;
+  padding: 0;
+}
+
 .users_not_complet {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
@@ -249,62 +254,68 @@ th {
   align-items: left;
   margin-bottom: 20px;
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 
 }
 
 .table-name {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .ChangeUserPassword {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .tablesList {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .addQuestion {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .createTables {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .getQuestions {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .createUsers {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .updateQuestion {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
 }
 
 .ClearAnsvers {
   background-color: #add8e6;
-  padding: 10px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.addUsers {
+  background-color: #add8e6;
+  padding: 15px;
   border-radius: 10px;
 }
 
@@ -319,6 +330,7 @@ th {
   background-color: #ff6f6f;
   color: rgb(0, 0, 0);
 }
+
 
 .populateUsers {
   background-color: #5c95ce;
@@ -477,7 +489,8 @@ select#group_id {
 
 @media (max-width: 1367px) {
   .logout {
-    width: 10%;
-    /* Измените это значение в соответствии с вашими потребностями */
+    font-size: 11px;
+    width: 6%;
+    margin-left: 30px;
   }
 }
